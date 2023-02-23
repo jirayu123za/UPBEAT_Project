@@ -4,6 +4,7 @@ public class CityCrew {
     protected Map<String, Double> variables;
     protected boolean didActionCommand = false;
     protected long opponentLocation;
+    protected long deposit;
 
     public CityCrew(){
         variables = new HashMap<>();
@@ -47,5 +48,9 @@ public class CityCrew {
         long totalDeposit = 0;
         /*Not complete*/
         return totalDeposit;
+    }
+
+    public void collectDeposit(long deposit) {
+        this.deposit += deposit;
     }
 }
