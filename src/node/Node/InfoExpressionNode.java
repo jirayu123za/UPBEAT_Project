@@ -1,7 +1,19 @@
 public class InfoExpressionNode implements Node{
+    protected String info;
+    protected CityCrew city;
+
+    public InfoExpressionNode(String info, CityCrew city){
+        this.info = info;
+        this.city = city;
+    }
+
     @Override
     public double evaluate() {
-        return 0;
+        if (info.equals("opponent")){
+            return city.getOpponentLocation();
+        }else {
+            return city.getTotalDeposit();
+        }
     }
 
     @Override
