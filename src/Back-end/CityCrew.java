@@ -3,7 +3,7 @@ import java.util.*;
 public class CityCrew {
     protected Map<String, Double> variables;
     protected boolean didActionCommand = false;
-
+    protected boolean didOpponentLocation = false;
     public CityCrew(){
         variables = new HashMap<>();
 
@@ -29,4 +29,7 @@ public class CityCrew {
     }
 
 
+    public boolean getOpponentLocation() {
+        return didOpponentLocation;
+    }
 }
