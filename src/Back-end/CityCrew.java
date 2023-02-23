@@ -36,4 +36,10 @@ public class CityCrew {
     public long getOpponentLocation() {
         return this.opponentLocation;
     }
+
+    public int getNearbyDeposit(String direction) {
+        int deposit = 0;
+        /*Not complete*/
+        return deposit;
+    }
 }
