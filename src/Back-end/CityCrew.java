@@ -3,7 +3,8 @@ import java.util.*;
 public class CityCrew {
     protected Map<String, Double> variables;
     protected boolean didActionCommand = false;
-    protected boolean didOpponentLocation = false;
+    protected long opponentLocation;
+
     public CityCrew(){
         variables = new HashMap<>();
 
@@ -28,8 +29,11 @@ public class CityCrew {
         this.didActionCommand = state;
     }
 
+    public void setOpponentLocation(long location) {
+        this.opponentLocation = location;
+    }
 
-    public boolean getOpponentLocation() {
-        return didOpponentLocation;
+    public long getOpponentLocation() {
+        return this.opponentLocation;
     }
 }
