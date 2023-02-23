@@ -6,6 +6,9 @@ public class CityCrew {
     protected long opponentLocation;
     protected long deposit;
     protected long budget;
+    protected double[][] territory;
+    protected int row, col;
+    protected int[] location;
 
     public CityCrew(){
         variables = new HashMap<>();
@@ -67,6 +70,47 @@ public class CityCrew {
         this.deposit += deposit;
     }
 
+    public boolean relocate(String direction) {
+        // Get the current position of the city center
+        int[] currentPosition = this.getLocation();
 
+        // Calculate the new position based on the direction
+        int[] newPosition;
+        switch (direction) {
+            case "up":
+                newPosition = new int[]{currentPosition[0] - 1, currentPosition[1]};
+                break;
+            case "down":
+                newPosition = new int[]{currentPosition[0] + 1, currentPosition[1]};
+                break;
+            case "left":
+                newPosition = new int[]{currentPosition[0], currentPosition[1] - 1};
+                break;
+            case "right":
+                newPosition = new int[]{currentPosition[0], currentPosition[1] + 1};
+                break;
+            default:
+                // Invalid direction
+                return false;
+        }
 
+        // Check if the new position is within the territory
+        if (newPosition[0] < 0 || newPosition[0] >= territory.length ||
+                newPosition[1] < 0 || newPosition[1] >= territory[0].length) {
+            return false;
+        }
+
+        // Update the city center location
+        this.setLocation(newPosition);
+
+        return true;
+    }
+
+    public int[] getLocation() {
+        return new int[]{this.row, this.col};
+    }
+
+    public void setLocation(int[] newPosition) {
+        this.location = newPosition;
+    }
 }
