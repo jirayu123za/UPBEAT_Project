@@ -5,6 +5,7 @@ public class CityCrew {
     protected boolean didActionCommand = false;
     protected long opponentLocation;
     protected long deposit;
+    protected long budget;
 
     public CityCrew(){
         variables = new HashMap<>();
@@ -53,4 +54,19 @@ public class CityCrew {
     public void collectDeposit(long deposit) {
         this.deposit += deposit;
     }
+
+    public long getBudget() {
+        return this.budget;
+    }
+
+    public void investDeposit(long deposit) {
+        if(deposit > this.budget){
+            throw new IllegalArgumentException("Cannot invest more than budget");
+        }
+        this.budget -= deposit;
+        this.deposit += deposit;
+    }
+
+
+
 }
