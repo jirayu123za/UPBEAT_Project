@@ -42,4 +42,10 @@ public class CityCrew {
         /*Not complete*/
         return deposit;
     }
+
+    public long getTotalDeposit() {
+        long totalDeposit = 0;
+        /*Not complete*/
+        return totalDeposit;
+    }
 }
