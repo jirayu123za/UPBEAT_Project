@@ -80,4 +80,9 @@ public class NodeFactory {
     public Node createRelocateCommandNode(CityCrew city, String direction){
         return new RelocateCommandNode(city, direction);
     }
+
+    // create a new region command node
+    public Node createRegionCommandNode(Node expressionNode, boolean isInvestCommand, boolean isCollectCommand, CityCrew city){
+        return new RegionCommandNode(expressionNode, isInvestCommand, isCollectCommand, city);
+    }
 }
