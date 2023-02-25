@@ -1,15 +1,15 @@
 public class UnaryArithmeticNode implements Node{
     protected String operator;
-    protected Node expression;
+    protected Node expressionNode;
 
-    public UnaryArithmeticNode(String op, Node expr){
+    public UnaryArithmeticNode(String op, Node expressionNode){
         this.operator = op;
-        this.expression = expr;
+        this.expressionNode = expressionNode;
     }
 
     @Override
     public double evaluate() {
-        double value = expression.evaluate();
+        double value = expressionNode.evaluate();
         if(operator.equals("-")) {
             return -value;
         }

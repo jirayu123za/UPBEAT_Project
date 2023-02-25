@@ -1,17 +1,17 @@
 public class IfStatementNode implements Node{
-    Node exprNode;
+    Node expressionNode;
     Node ifTrueStatementNode;
     Node ifFalseStatementNode;
 
-    public IfStatementNode(Node exprNode, Node ifTrueStatementNode, Node ifFalseStatementNode) {
-        this.exprNode = exprNode;
+    public IfStatementNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode) {
+        this.expressionNode = expressionNode;
         this.ifTrueStatementNode = ifTrueStatementNode;
         this.ifFalseStatementNode = ifFalseStatementNode;
     }
 
     @Override
     public double evaluate() {
-        if(exprNode.evaluate() > 0){
+        if(expressionNode.evaluate() > 0){
             ifTrueStatementNode.evaluate();
         }else{
             ifFalseStatementNode.evaluate();

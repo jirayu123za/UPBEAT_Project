@@ -1,15 +1,15 @@
 public class WhileStatementNode implements Node{
-    Node exprNode;
+    Node expressionNode;
     Node statementNode;
 
-    public WhileStatementNode(Node exprNode, Node statementNode) {
-        this.exprNode = exprNode;
+    public WhileStatementNode(Node expressionNode, Node statementNode) {
+        this.expressionNode = expressionNode;
         this.statementNode = statementNode;
     }
 
     @Override
     public double evaluate() {
-        for (int counter = 0; counter < 10000 && exprNode.evaluate() > 0; counter++){
+        for (int counter = 0; counter < 10000 && expressionNode.evaluate() > 0; counter++){
             statementNode.evaluate();
         }
         return 0;
