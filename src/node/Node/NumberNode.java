@@ -1,13 +1,13 @@
 public class NumberNode implements Node{
-    protected double number;
+    protected double value;
 
-    public NumberNode(double number){
-        this.number = number;
+    public NumberNode(double value){
+        this.value = value;
     }
 
     @Override
     public double evaluate() {
-        return number;
+        return value;
     }
 
     @Override
