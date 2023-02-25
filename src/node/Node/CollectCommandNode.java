@@ -1,15 +1,15 @@
 public class CollectCommandNode implements Node{
-    protected Node expression;
+    protected Node expressionNode;
     protected CityCrew city;
 
-    public CollectCommandNode(Node expr, CityCrew city){
-        this.expression = expr;
+    public CollectCommandNode(Node expressionNode, CityCrew city){
+        this.expressionNode = expressionNode;
         this.city = city;
     }
 
     @Override
     public double evaluate() {
-        long deposit = (long) expression.evaluate();
+        long deposit = (long) expressionNode.evaluate();
         city.collectDeposit(deposit);
         return 0;
     }

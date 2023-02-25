@@ -1,16 +1,16 @@
 public class InvestCommandNode implements Node{
-    protected Node expression;
+    protected Node expressionNode;
     protected CityCrew city;
 
     public InvestCommandNode(Node expr, CityCrew city){
-        this.expression = expr;
+        this.expressionNode = expr;
         this.city = city;
     }
 
     @Override
     public double evaluate() {
         long budget = city.getBudget();
-        long deposit = (long) expression.evaluate();
+        long deposit = (long) expressionNode.evaluate();
         if(budget >= deposit){
             city.investDeposit(deposit);
         }
