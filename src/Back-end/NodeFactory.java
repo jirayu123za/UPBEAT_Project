@@ -12,7 +12,7 @@ public class NodeFactory {
 
     /*PlanNode/PlanNode. it's the same thing?
       return PlanNode */
-    public PlanNode createBlockStatementNode(){
+    public PlanNode createPlanNode(){
         return new PlanNode();
     }
 
