@@ -56,13 +56,28 @@ public class NodeFactory {
         return new NumberNode(value);
     }
 
+    // create a new info node
     public Node createNode(String direction, CityCrew city){
         return new InfoExpressionNode(direction, city);
     }
 
+    // create a new var node by rand
     public VarNode createRandNumNode(){
         return new RandNumNode();
     }
 
+    // create a new collect command node
+    public Node createCollectCommandNode(Node expressionNode, CityCrew city){
+        return new CollectCommandNode(expressionNode, city);
+    }
 
+    // create a new invest command node
+    public Node createInvestCommandNode(Node expressionNode, CityCrew city){
+        return new InvestCommandNode(expressionNode, city);
+    }
+
+    // create a new relocate command node
+    public Node createRelocateCommandNode(CityCrew city, String direction){
+        return new RelocateCommandNode(city, direction);
+    }
 }
