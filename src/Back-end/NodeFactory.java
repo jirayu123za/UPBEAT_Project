@@ -52,8 +52,8 @@ public class NodeFactory {
     }
 
     // create a new number node
-    public NumberNode createNumberNode(double number){
-        return new NumberNode(number);
+    public Node createNode(double value){
+        return new NumberNode(value);
     }
 
 
