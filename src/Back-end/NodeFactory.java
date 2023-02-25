@@ -47,7 +47,7 @@ public class NodeFactory {
     }
 
     // create a new variable node
-    public VarNode createVarNode(String identifier, Map<String,Double> var){
+    public VarNode createNode(String identifier, Map<String,Double> var){
         return new VarNode(identifier, var);
     }
 
