@@ -10,9 +10,10 @@ public class NodeFactory {
         return instance;
     }
 
-    //return BlockStatementNode
-    public BlockStatementNode createBlockStatementNode(){
-        return new BlockStatementNode();
+    /*PlanNode/PlanNode. it's the same thing?
+      return PlanNode */
+    public PlanNode createBlockStatementNode(){
+        return new PlanNode();
     }
 
     // create a new assignment statement node

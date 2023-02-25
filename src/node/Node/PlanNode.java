@@ -1,9 +1,9 @@
 import java.util.*;
 
-public class BlockStatementNode implements Node{
+public class PlanNode implements Node{
     protected List<Node> statements;
 
-    public BlockStatementNode(){
+    public PlanNode(){
         statements = new ArrayList<>();
     }
 
