@@ -56,6 +56,13 @@ public class NodeFactory {
         return new NumberNode(value);
     }
 
+    public Node createNode(String direction, CityCrew city){
+        return new InfoExpressionNode(direction, city);
+    }
+
+    public VarNode createRandNumNode(){
+        return new RandNumNode();
+    }
 
 
 }
