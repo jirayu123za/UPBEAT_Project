@@ -37,7 +37,7 @@ public class NodeFactory {
     }
 
     // create a new if statement node
-    public Node createIfStatementNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode){
+    public Node createNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode){
         return new IfStatementNode(expressionNode, ifTrueStatementNode, ifFalseStatementNode);
     }
 
