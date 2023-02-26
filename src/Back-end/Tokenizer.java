@@ -1,16 +1,25 @@
 import java.util.*;
+import java.util.regex.Matcher;
 
 public class Tokenizer {
     protected List<String> tokens;
-    protected String next;
+    protected String next, ConstructionPlan;
+    protected Matcher matcher;
 
-    public Tokenizer() throws SyntaxError{
+    public Tokenizer(String constructionPlan) throws SyntaxError{
+        this.ConstructionPlan = constructionPlan;
         tokens = new ArrayList<>();
+
+        matcher = RegularExpression.ALL_PATTERN.matcher(ConstructionPlan);
         computeNext();
     }
 
     private void computeNext(){
-        /*need implement*/
+        if(matcher.find()){
+            next = matcher.group();
+        }else{
+            next = null;
+        }
     }
 
     private String peek(){
@@ -24,17 +33,17 @@ public class Tokenizer {
         return result;
     }
 
-    boolean peek(String r){
+    boolean peek(String RegularExpression){
         if(peek() != null)
-            return peek().matches(r);
+            return peek().matches(RegularExpression);
         return false;
     }
 
-    void consume(String r) throws SyntaxError{
-            if(peek().matches(r)){
+    void consume(String RegularExpression) throws SyntaxError{
+            if(peek().matches(RegularExpression)){
                 consume();
             }else {
-                throw new SyntaxError("consume(r): token does not match r");
+                throw new SyntaxError("consume(s): token does not match s");
             }
     }
 
