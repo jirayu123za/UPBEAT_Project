@@ -20,9 +20,10 @@ public class RegularExpression {
     public static final String OPPONENT_REGEX = "";
     public static final String NEARBY_REGEX = "";
 
-    // String action, done, relocate, invest, collect, shoot
+    // String action, done, move, relocate, invest, collect, shoot
     public static final String ACTION_REGEX = "";
     public static final String DONE_REGEX = "";
+    public static final String MOVE_REGEX = "";
     public static final String RELOCATE_REGEX = "";
     public static final String INVEST_REGEX = "";
     public static final String COLLECT_REGEX = "";
@@ -70,9 +71,10 @@ public class RegularExpression {
     public static final Pattern OPPONENT_PATTERN = Pattern.compile(OPERATOR_REGEX);
     public static final Pattern NEARBY_PATTERN = Pattern.compile(NEARBY_REGEX);
 
-    // Pattern action, done, relocate, invest, collect, shoot
+    // Pattern action, done, move, relocate, invest, collect, shoot
     public static final Pattern ACTION_PATTERN = Pattern.compile(ACTION_REGEX);
     public static final Pattern DONE_PATTERN = Pattern.compile(DONE_REGEX);
+    public static final Pattern MOVE_PATTERN = Pattern.compile(MOVE_REGEX);
     public static final Pattern RELOCATE_PATTERN = Pattern.compile(RELOCATE_REGEX);
     public static final Pattern INVEST_PATTERN = Pattern.compile(INVEST_REGEX);
     public static final Pattern COLLECT_PATTERN = Pattern.compile(COLLECT_REGEX);
