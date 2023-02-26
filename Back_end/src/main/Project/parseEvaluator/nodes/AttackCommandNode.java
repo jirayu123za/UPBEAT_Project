@@ -1,21 +1,16 @@
 package Project.parseEvaluator.nodes;
-import Project.CityCrew;
 
 public class AttackCommandNode implements Node{
     protected String direction;
-    protected CityCrew city;
+    protected Node expressionNode;
 
-    public AttackCommandNode(String direction, CityCrew city){
+    public AttackCommandNode(String direction, Node expressionNode){
         this.direction = direction;
-        this.city = city;
+        this.expressionNode = expressionNode;
     }
 
     @Override
     public double evaluate() {
-        if(!city.getDidActionCommand()){
-            city.shoot(direction);
-            city.setDidActionCommand(true);
-        }
         return 0;
     }
 
