@@ -32,8 +32,8 @@ public class NodeFactory {
     }
 
     // create a new attack command node
-    public AttackCommandNode createAttackCommandNode(String direction, CityCrew city){
-        return new AttackCommandNode(direction, city);
+    public AttackCommandNode createAttackCommandNode(String direction, Node expressionNode){
+        return new AttackCommandNode(direction, expressionNode);
     }
 
     // create a new while statement node
