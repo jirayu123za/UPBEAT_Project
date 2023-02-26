@@ -1,10 +1,6 @@
 package parseEvaluator;
 
 import
-import parseEvaluator.NodeFactory;
-import parseEvaluator.SyntaxError;
-import parseEvaluator.Tokenizer;
-import parseEvaluator.UnmatchedParenthesesError;
 
 public class ParseEvaluator {
     protected CityCrew city;
