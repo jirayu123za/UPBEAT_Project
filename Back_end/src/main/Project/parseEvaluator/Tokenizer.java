@@ -23,11 +23,11 @@ public class Tokenizer {
         }
     }
 
-    private String peek(){
+    public String peek(){
         return next;
     }
 
-    private String consume(){
+    public String consume(){
         String result = next;
         computeNext();
 
