@@ -87,12 +87,17 @@ public class NodeFactory {
     }
 
     // create a new region command node
-    public Node createRegionCommandNode(Node expressionNode, CityCrew city){
+    public RegionCommandNode createRegionCommandNode(Node expressionNode, CityCrew city){
         return new RegionCommandNode(expressionNode, city);
     }
 
     // create a new done command node
-    public Node createNode(CityCrew city){
+    public DoneCommandNode createDoneCommandNode(CityCrew city){
         return new DoneCommandNode(city);
+    }
+
+    // create a new action command node
+    public ActionCommandNode createActionCommandNode(String action, CityCrew city){
+        return new ActionCommandNode(action, city);
     }
 }
