@@ -1,4 +1,5 @@
 package Project.parseEvaluator.nodes;
+import Project.CityCrew;
 
 public class NearbyNode implements Node{
     protected String direction;

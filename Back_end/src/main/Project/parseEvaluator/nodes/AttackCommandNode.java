@@ -1,4 +1,5 @@
 package Project.parseEvaluator.nodes;
+import Project.CityCrew;
 
 public class AttackCommandNode implements Node{
     protected String direction;
