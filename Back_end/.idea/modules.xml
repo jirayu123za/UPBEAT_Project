@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/UPBEAT_Project.iml" filepath="$PROJECT_DIR$/.idea/UPBEAT_Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Back_end/.idea/UPBEAT_Project.iml" filepath="$PROJECT_DIR$/Back_end/.idea/UPBEAT_Project.iml" />
       <module fileurl="file://$PROJECT_DIR$/Back_end/src/src.iml" filepath="$PROJECT_DIR$/Back_end/src/src.iml" />
     </modules>
   </component>
