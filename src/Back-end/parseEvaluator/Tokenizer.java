@@ -1,3 +1,5 @@
+package parseEvaluator;
+
 import java.util.*;
 import java.util.regex.Matcher;
 
@@ -6,7 +8,7 @@ public class Tokenizer {
     protected String next, ConstructionPlan;
     protected Matcher matcher;
 
-    public Tokenizer(String constructionPlan) throws SyntaxError{
+    public Tokenizer(String constructionPlan) throws SyntaxError {
         this.ConstructionPlan = constructionPlan;
         tokens = new ArrayList<>();
 
@@ -39,7 +41,7 @@ public class Tokenizer {
         return false;
     }
 
-    void consume(String RegularExpression) throws SyntaxError{
+    void consume(String RegularExpression) throws SyntaxError {
             if(peek().matches(RegularExpression)){
                 consume();
             }else {

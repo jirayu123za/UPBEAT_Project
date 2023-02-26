@@ -1,3 +1,5 @@
+package parseEvaluator;
+
 import java.util.regex.Pattern;
 
 public class RegularExpression {
