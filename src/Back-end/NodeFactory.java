@@ -85,4 +85,9 @@ public class NodeFactory {
     public Node createRegionCommandNode(Node expressionNode, boolean isInvestCommand, boolean isCollectCommand, CityCrew city){
         return new RegionCommandNode(expressionNode, isInvestCommand, isCollectCommand, city);
     }
+
+    // create a new done command node
+    public Node createNode(CityCrew city){
+        return new DoneCommandNode(city);
+    }
 }
