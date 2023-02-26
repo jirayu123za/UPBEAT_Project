@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class DoneCommandNode implements Node{
     protected CityCrew city;
 

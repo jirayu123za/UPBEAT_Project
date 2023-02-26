@@ -1,15 +1,17 @@
-public class InfoExpressionNode implements Node{
+package parseEvaluator.nodes;
+
+public class NearbyNode implements Node{
     protected String direction;
     protected CityCrew city;
 
-    public InfoExpressionNode(String direction, CityCrew city){
+    public NearbyNode(String direction, CityCrew city){
         this.direction = direction;
         this.city = city;
     }
 
     @Override
     public double evaluate() {
-        return city.getOpponentLocation();
+        return city.getNearbyDeposit(direction);
     }
 
     @Override

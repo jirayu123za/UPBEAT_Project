@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class IfStatementNode implements Node{
     Node expressionNode;
     Node ifTrueStatementNode;

@@ -1,7 +1,11 @@
-public class OpponentNode implements Node{
+package parseEvaluator.nodes;
+
+public class InfoExpressionNode implements Node{
+    protected String direction;
     protected CityCrew city;
 
-    public OpponentNode(CityCrew city){
+    public InfoExpressionNode(String direction, CityCrew city){
+        this.direction = direction;
         this.city = city;
     }
 

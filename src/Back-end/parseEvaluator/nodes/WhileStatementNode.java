@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class WhileStatementNode implements Node{
     Node expressionNode;
     Node statementNode;

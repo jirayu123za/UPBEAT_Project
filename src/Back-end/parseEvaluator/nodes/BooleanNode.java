@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class BooleanNode implements Node{
     protected boolean value;
 

@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class ActionCommandNode implements Node{
     protected String action;
     protected CityCrew city;

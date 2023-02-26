@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class CollectCommandNode implements Node{
     protected Node expressionNode;
     protected CityCrew city;

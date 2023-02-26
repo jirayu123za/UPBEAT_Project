@@ -1,8 +1,10 @@
-public class AttackCommandNode implements Node{
+package parseEvaluator.nodes;
+
+public class MoveCommandNode implements Node{
     protected String direction;
     protected CityCrew city;
 
-    public AttackCommandNode(String direction, CityCrew city){
+    public MoveCommandNode(String direction, CityCrew city){
         this.direction = direction;
         this.city = city;
     }
@@ -10,7 +12,7 @@ public class AttackCommandNode implements Node{
     @Override
     public double evaluate() {
         if(!city.getDidActionCommand()){
-            city.shoot(direction);
+            city.move(direction);
             city.setDidActionCommand(true);
         }
         return 0;

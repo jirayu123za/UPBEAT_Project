@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class BinaryArithmeticNode implements Node{
     protected Node left, right;
     protected String op;

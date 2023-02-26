@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class DirectionNode implements Node{
     @Override
     public double evaluate() {

@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class RegionCommandNode implements Node{
     protected Node expressionNode;
     protected boolean isInvestCommand;

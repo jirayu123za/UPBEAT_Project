@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class RelocateCommandNode implements Node{
     protected CityCrew city;
     protected String direction;

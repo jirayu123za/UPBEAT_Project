@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 import java.util.*;
 public class RandNumNode extends VarNode{
     protected Random rand = null;

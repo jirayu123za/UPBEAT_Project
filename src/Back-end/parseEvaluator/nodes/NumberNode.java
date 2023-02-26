@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class NumberNode implements Node{
     protected double value;
 

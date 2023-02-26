@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 public class AssignmentStatementNode implements Node{
     protected VarNode varNode;
     protected Node expressionNode;

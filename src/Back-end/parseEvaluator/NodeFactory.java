@@ -12,8 +12,8 @@ public class NodeFactory {
         return instance;
     }
 
-    /*PlanNode/PlanNode. it's the same thing?
-      return PlanNode */
+    /*nodes.PlanNode/nodes.PlanNode. it's the same thing?
+      return nodes.PlanNode */
     public PlanNode createPlanNode(){
         return new PlanNode();
     }

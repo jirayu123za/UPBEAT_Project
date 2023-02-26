@@ -1,3 +1,5 @@
+package parseEvaluator.nodes;
+
 import java.util.*;
 public class VarNode implements Node{
     protected Map<String,Double> var = null;
