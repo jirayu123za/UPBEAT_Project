@@ -45,25 +45,24 @@ public class ParseEvaluator {
         return factory.createAssignmentStatementNode(variableNode, expressionNode);
     }
 
-    // Need to implement to complete
     // ActionCommand → DoneCommand | RelocateCommand | MoveCommand | RegionCommand | AttackCommand
     public Node parseAction() throws SyntaxError {
         if (tkz.peek(RegularExpression.DONE_REGEX)) {
-            /*change boolean something*/
+            tkz.consume(RegularExpression.DONE_REGEX);
+            return factory.createDoneCommandNode(city);
         } else if (tkz.peek(RegularExpression.RELOCATE_REGEX)) {
-            /*change boolean something*/
+            tkz.consume(RegularExpression.RELOCATE_REGEX);
+            String direction = parseDirection();
+            return factory.createRelocateCommandNode(city,direction);
         } else if (tkz.peek(RegularExpression.MOVE_REGEX)) {
-            /*change boolean something*/
-        } else if (tkz.peek(RegularExpression.INVEST_REGEX)) {
-            /*change boolean something*/
-        } else if (tkz.peek(RegularExpression.COLLECT_REGEX)) {
-            /*change boolean something*/
+            return parseMoveCommand();
+        } else if (tkz.peek(RegularExpression.INVEST_REGEX) || tkz.peek(RegularExpression.COLLECT_REGEX)){
+            return parseRegionCommand();
         } else if (tkz.peek(RegularExpression.SHOOT_REGEX)) {
-            /*change boolean something*/
+            return parseAttackCommandNode();
+        }else {
+            return factory.createActionCommandNode(RegularExpression.ACTION_REGEX, city);
         }
-        tkz.consume(RegularExpression.ACTION_REGEX);
-
-        return null;
     }
 
     // MoveCommand → move Direction
@@ -89,24 +88,18 @@ public class ParseEvaluator {
         Node expressionNode = parseExpression();
 
         if (invest.matches(RegularExpression.INVEST_REGEX)) {
-            factory.createInvestCommandNode(expressionNode, city);
+            return factory.createInvestCommandNode(expressionNode, city);
         } else if (collect.matches(RegularExpression.COLLECT_REGEX)) {
-            factory.createCollectCommandNode(expressionNode, city);
+            return factory.createCollectCommandNode(expressionNode, city);
         }
         return factory.createRegionCommandNode(expressionNode, city);
     }
 
     // AttackCommand → shoot Direction Expression
     public Node parseAttackCommandNode() throws SyntaxError{
+        tkz.consume(RegularExpression.SHOOT_REGEX);
         Node expressionNode = parseExpression();
         String direction = parseDirection();
-
-        if(tkz.peek(RegularExpression.SHOOT_REGEX)){
-            /*check boolean something*/
-        }
-        tkz.consume(RegularExpression.SHOOT_REGEX);
-
-        AttackCommandNode AttackCommandNode = new AttackCommandNode(direction,expressionNode);
         return factory.createAttackCommandNode(direction, expressionNode);
     }
 
@@ -256,9 +249,7 @@ public class ParseEvaluator {
 
             return factory.createRandNumNode();
         }
-        return null;
+        tkz.consume(RegularExpression.VARIABLE_REGEX);
+        return factory.createVariableNode(identifier, city.getVariables());
     }
-
-    // All boolean method
-
 }
