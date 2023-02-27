@@ -17,6 +17,7 @@ public class ParseEvaluator {
         }
     }
 
+    // Need to implement to complete
     public Node parsePlan() throws SyntaxError, UnmatchedParenthesesError {
         PlanNode planNode = factory.createPlanNode();
 
@@ -36,6 +37,7 @@ public class ParseEvaluator {
         return planNode;
     }
 
+    // AssignmentStatement → <identifier> = Expression
     public Node parseAssignment() throws SyntaxError {
         VariableNode variableNode = parseVariable();
         tkz.consume(RegularExpression.ASSIGN_REGEX);
@@ -43,6 +45,8 @@ public class ParseEvaluator {
         return factory.createAssignmentStatementNode(variableNode, expressionNode);
     }
 
+    // Need to implement to complete
+    // ActionCommand → DoneCommand | RelocateCommand | MoveCommand | RegionCommand | AttackCommand
     public Node parseAction() throws SyntaxError {
         if (tkz.peek(RegularExpression.DONE_REGEX)) {
             /*change boolean something*/
