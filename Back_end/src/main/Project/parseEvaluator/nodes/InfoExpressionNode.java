@@ -2,11 +2,11 @@ package Project.parseEvaluator.nodes;
 import Project.CityCrew;
 
 public class InfoExpressionNode implements Node{
-    protected String direction;
+    protected String type;
     protected CityCrew city;
 
-    public InfoExpressionNode(String direction, CityCrew city){
-        this.direction = direction;
+    public InfoExpressionNode(String type, CityCrew city){
+        this.type = type;
         this.city = city;
     }
 

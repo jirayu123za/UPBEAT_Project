@@ -62,8 +62,8 @@ public class NodeFactory {
     }
 
     // create a new info node
-    public Node createInfoExpressionNode(String direction, CityCrew city){
-        return new InfoExpressionNode(direction, city);
+    public Node createInfoExpressionNode(String type, CityCrew city){
+        return new InfoExpressionNode(type, city);
     }
 
     // create a new var node by rand
