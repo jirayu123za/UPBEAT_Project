@@ -22,8 +22,8 @@ public class NodeFactory {
     }
 
     // create a new assignment statement node
-    public Node createAssignmentStatementNode(VarNode varNode, Node expressionNode){
-        return new AssignmentStatementNode(varNode, expressionNode);
+    public Node createAssignmentStatementNode(VariableNode variableNode, Node expressionNode){
+        return new AssignmentStatementNode(variableNode, expressionNode);
     }
 
     // create a new move command node
@@ -52,8 +52,8 @@ public class NodeFactory {
     }
 
     // create a new variable node
-    public VarNode createVarNode(String identifier, Map<String,Double> var){
-        return new VarNode(identifier, var);
+    public VariableNode createVariableNode(String identifier, Map<String,Double> VariableNode){
+        return new VariableNode(identifier, VariableNode);
     }
 
     // create a new number node
@@ -66,8 +66,8 @@ public class NodeFactory {
         return new InfoExpressionNode(type, direction, city);
     }
 
-    // create a new var node by rand
-    public VarNode createRandNumNode(){
+    // create a new VariableNode node by rand
+    public VariableNode createRandNumNode(){
         return new RandNumNode();
     }
 

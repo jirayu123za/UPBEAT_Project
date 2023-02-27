@@ -1,7 +1,7 @@
 package Project.parseEvaluator.nodes;
 import java.util.*;
 
-public class RandNumNode extends VarNode{
+public class RandNumNode extends VariableNode {
     protected Random rand;
 
     public RandNumNode(){

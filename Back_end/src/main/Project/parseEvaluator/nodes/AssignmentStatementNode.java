@@ -1,17 +1,17 @@
 package Project.parseEvaluator.nodes;
 
 public class AssignmentStatementNode implements Node{
-    protected VarNode varNode;
+    protected VariableNode variableNode;
     protected Node expressionNode;
 
-    public AssignmentStatementNode(VarNode varNode, Node expressionNode){
-        this.varNode = varNode;
+    public AssignmentStatementNode(VariableNode variableNode, Node expressionNode){
+        this.variableNode = variableNode;
         this.expressionNode = expressionNode;
     }
 
     @Override
     public double evaluate() {
-        varNode.assignValue(expressionNode.evaluate());
+        variableNode.assignValue(expressionNode.evaluate());
         return 0;
     }
 
