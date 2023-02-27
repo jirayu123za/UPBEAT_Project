@@ -22,47 +22,47 @@ public class NodeFactory {
     }
 
     // create a new assignment statement node
-    public Node createNode(VarNode varNode, Node expressionNode){
+    public Node createAssignmentStatementNode(VarNode varNode, Node expressionNode){
         return new AssignmentStatementNode(varNode, expressionNode);
     }
 
     // create a new move command node
-    public MoveCommandNode createMoveCommandNode(String direction, CityCrew city){
+    public Node createMoveCommandNode(String direction, CityCrew city){
         return new MoveCommandNode(direction, city);
     }
 
     // create a new attack command node
-    public AttackCommandNode createAttackCommandNode(String direction, Node expressionNode){
+    public Node createAttackCommandNode(String direction, Node expressionNode){
         return new AttackCommandNode(direction, expressionNode);
     }
 
     // create a new while statement node
-    public Node createNode(Node expressionNode, Node statementNode){
+    public Node createWhileStatementNode(Node expressionNode, Node statementNode){
         return new WhileStatementNode(expressionNode, statementNode);
     }
 
     // create a new if statement node
-    public Node createNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode){
+    public Node createIfStatementNode(Node expressionNode, Node ifTrueStatementNode, Node ifFalseStatementNode){
         return new IfStatementNode(expressionNode, ifTrueStatementNode, ifFalseStatementNode);
     }
 
     // create a new binary arithmetic node
-    public Node createNode(Node left, String op, Node right){
+    public Node createBinaryArithmeticNode(Node left, String op, Node right){
         return new BinaryArithmeticNode(left, op, right);
     }
 
     // create a new variable node
-    public VarNode createNode(String identifier, Map<String,Double> var){
+    public VarNode createVarNode(String identifier, Map<String,Double> var){
         return new VarNode(identifier, var);
     }
 
     // create a new number node
-    public Node createNode(double value){
+    public Node createNumberNode(double value){
         return new NumberNode(value);
     }
 
     // create a new info node
-    public Node createNode(String direction, CityCrew city){
+    public Node createInfoExpressionNode(String direction, CityCrew city){
         return new InfoExpressionNode(direction, city);
     }
 
