@@ -12,6 +12,7 @@ public class ParseEvaluator {
             this.tkz = new Tokenizer(src);
             factory = NodeFactory.instance();
             this.city = city;
+            // System.out.println("File: " + src);
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
         }
@@ -19,21 +20,51 @@ public class ParseEvaluator {
 
     // Need to implement to complete
     public Node parsePlan() throws SyntaxError, UnmatchedParenthesesError {
+        // System.out.println("parseProgram " + tkz.peek());
         PlanNode planNode = factory.createPlanNode();
 
-        while (tkz.peek() != null) {
+        while(tkz.peek() != null){
             String string = tkz.peek();
-            if (string.matches(RegularExpression.OPERATOR_REGEX) || string.matches(RegularExpression.NUMBER_REGEX) || string.matches(RegularExpression.DIRECTION_REGEX) || string.matches(RegularExpression.INFOEXPRESSION_REGEX)) {
-                tkz.consume();
+            // System.out.println(string);
+
+            if(string.matches(RegularExpression.OPERATOR_REGEX) || string.matches(RegularExpression.NUMBER_REGEX) || string.matches(RegularExpression.DIRECTION_REGEX) || string.matches(RegularExpression.INFOEXPRESSION_REGEX)) {
                 throw new SyntaxError("Invalid statement for start");
-            } else if (string.matches(RegularExpression.RESERVEDWORD_REGEX)) {
+            }else if(string.matches(RegularExpression.RESERVEDWORD_REGEX)){
+                if(string.matches(RegularExpression.IF_REGEX)){
+                    planNode.addStatement(parseIfStatementNode());
+                }else if(string.matches(RegularExpression.WHILE_REGEX)){
+                    planNode.addStatement(parseWhileStatementNode());
+                }else if(string.matches(RegularExpression.ACTION_REGEX)){
+                    planNode.addStatement(parseAction());
+                }else if(string.matches(RegularExpression.ELSE_REGEX)){
+                    break;
+                }else if(string.matches(RegularExpression.INFOEXPRESSION_REGEX)) {
+                    planNode.addStatement(parseInfoExpression());
+                }
+            }else if(string.matches(RegularExpression.VARIABLE_REGEX)){
+                planNode.addStatement(parseAssignment());
+            }else if(string.matches(RegularExpression.PARENTHESES_REGEX)){
+                if(string.equals("(") || string.equals(")")){
+                    throw new UnmatchedParenthesesError("( or ) in statement starter");
+                }else if(string.equals("{")){
+                    // System.out.println(" Bracket {");
+                    tkz.consume();
+                    planNode.addStatement(parsePlan());
 
-
-
-            } else {
+                    if(!tkz.peek().equals("}")){
+                        throw new UnmatchedParenthesesError("Missing }");
+                    }
+                    tkz.consume();
+                }else if(string.equals("}")){
+                    break;
+                }
+            }else if(string.matches("\n")){
+                tkz.consume();
+            }else{
                 throw new SyntaxError("Syntax error: " + string);
             }
         }
+        // System.out.println("Return parseProgram");
         return planNode;
     }
 
