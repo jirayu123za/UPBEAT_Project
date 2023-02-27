@@ -5,52 +5,52 @@ import java.util.regex.Pattern;
 public class RegularExpression {
     // String direction
     public static final String DIRECTION_REGEX = " up|down|upleft|upright|downleft|downright";
-    public static final String UP_REGEX = "";
-    public static final String DOWN_REGEX = "";
-    public static final String UPLEFT_REGEX = "";
-    public static final String UPRIGHT_REGEX = "";
-    public static final String DOWNLEFT_REGEX = "";
-    public static final String DOWNRIGHT_REGEX = "";
+    public static final String UP_REGEX = "up";
+    public static final String DOWN_REGEX = "down";
+    public static final String UPLEFT_REGEX = "upleft";
+    public static final String UPRIGHT_REGEX = "upright";
+    public static final String DOWNLEFT_REGEX = "downleft";
+    public static final String DOWNRIGHT_REGEX = "downright";
 
     // String reserved words
     public static final String RESERVEDWORD_REGEX = "collect|done|down|downleft|downright|else|if|invest|move|nearby|opponent|relocate|shoot|then|up|upleft|upright|while";
 
     // String infoExpression, opponent, nearby
-    public static final String INFOEXPRESSION_REGEX = "";
-    public static final String OPPONENT_REGEX = "";
-    public static final String NEARBY_REGEX = "";
+    public static final String INFOEXPRESSION_REGEX = "InfoExpression";
+    public static final String OPPONENT_REGEX = "opponent";
+    public static final String NEARBY_REGEX = "nearby";
 
     // String action, done, move, relocate, invest, collect, shoot
-    public static final String ACTION_REGEX = "";
-    public static final String DONE_REGEX = "";
-    public static final String MOVE_REGEX = "";
-    public static final String RELOCATE_REGEX = "";
-    public static final String INVEST_REGEX = "";
-    public static final String COLLECT_REGEX = "";
-    public static final String SHOOT_REGEX = "";
+    public static final String ACTION_REGEX = "done|relocate|move|invest|collect|shoot";
+    public static final String DONE_REGEX = "done";
+    public static final String MOVE_REGEX = "move";
+    public static final String RELOCATE_REGEX = "relocate";
+    public static final String INVEST_REGEX = "invest";
+    public static final String COLLECT_REGEX = "collect";
+    public static final String SHOOT_REGEX = "shoot";
 
     // String if, then, else
-    public static final String IF_REGEX = "";
-    public static final String THEN_REGEX = "";
-    public static final String ELSE_REGEX = "";
+    public static final String IF_REGEX = "if";
+    public static final String THEN_REGEX = "then";
+    public static final String ELSE_REGEX = "else";
 
     // String while
-    public static final String WHILE_REGEX = "";
+    public static final String WHILE_REGEX = "while";
 
     // String operator, assign, parentheses
-    public static final String OPERATOR_REGEX = "";
-    public static final String ASSIGN_REGEX = "";
-    public static final String PARENTHESES_REGEX = "";
+    public static final String OPERATOR_REGEX = "[-+*/%^]";
+    public static final String ASSIGN_REGEX = "=";
+    public static final String PARENTHESES_REGEX = "[({})]";
 
     // String number, variable
-    public static final String NUMBER_REGEX = "";
-    public static final String VARIABLE_REGEX = "";
+    public static final String NUMBER_REGEX = "([0-9]+[.]*[0-9]+)|([0-9]+)";
+    public static final String VARIABLE_REGEX = "((upleft|upright|downleft|downright|done|relocate|move|invest|collect|shoot|up|down|if|then|else|while|opponent|nearby)[a-zA-Z0-9]+)|([a-zA-Z]+[a-zA-Z0-9]*)";
 
     // String random
-    public static final String RANDOM_REGEX = "";
+    public static final String RANDOM_REGEX = "random";
 
     // String all
-    public static final String ALL_REGEX = "";
+    public static final String ALL_REGEX = "([-+*/%^])|(=)|([({})])|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|done|relocate|move|invest|collect|shoot|up|down|if|then|else|while|opponent|nearby)[a-zA-Z0-9]+)|(upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)|([a-zA-Z]+[a-zA-Z0-9]*)|([^ \\\\r\\\\n]+)";
 
 
 
@@ -68,7 +68,7 @@ public class RegularExpression {
 
     // Pattern infoExpression, opponent, nearby
     public static final Pattern INFOEXPRESSION_PATTERN = Pattern.compile(INFOEXPRESSION_REGEX);
-    public static final Pattern OPPONENT_PATTERN = Pattern.compile(OPERATOR_REGEX);
+    public static final Pattern OPPONENT_PATTERN = Pattern.compile(OPPONENT_REGEX);
     public static final Pattern NEARBY_PATTERN = Pattern.compile(NEARBY_REGEX);
 
     // Pattern action, done, move, relocate, invest, collect, shoot
