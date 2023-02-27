@@ -215,7 +215,7 @@ public class ParseEvaluator {
     public Node parseFactory() throws SyntaxError, EvaluationError{
         Node power = parsePower();
 
-        if(tkz.peek().equals("^")){
+        if(tkz.peek().equals("\\^")){
             tkz.consume();
             return factory.createBinaryArithmeticNode(power, "^", parseFactory());
         }
@@ -241,7 +241,7 @@ public class ParseEvaluator {
             return numberNode;
         }else if(tkz.peek(RegularExpression.VARIABLE_REGEX)){
             return parseVariable();
-        }else if(tkz.peek() != null || !tkz.peek().equals("(")){
+        }else if(tkz.peek() != null && !tkz.peek().equals("(")){
             tkz.consume();
             Node expressionNode = parseExpression();
             if(tkz.peek() == null || !tkz.peek().equals(")")){
