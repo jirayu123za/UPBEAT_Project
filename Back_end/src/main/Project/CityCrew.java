@@ -115,4 +115,8 @@ public class CityCrew {
     public void setLocation(int[] newPosition) {
         this.location = newPosition;
     }
+
+    public Map<String, Double> getVariables(){
+        return variables;
+    }
 }
