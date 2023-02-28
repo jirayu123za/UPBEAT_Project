@@ -1,11 +1,10 @@
 package Project;
-import java.util.*;
 
-public class TimeMange {
+public class Time {
     protected double deltaTime;
     protected double fps;
 
-    public TimeMange(){
+    public Time(){
         this.deltaTime = 1.0;
         this.fps = 60.0;
     }
