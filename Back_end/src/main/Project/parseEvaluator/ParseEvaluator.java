@@ -2,8 +2,9 @@ package Project.parseEvaluator;
 import Project.*;
 import Project.parseEvaluator.nodes.*;
 
+import java.util.HashMap;
+
 public class ParseEvaluator {
-    protected CityCrew city;
     protected Tokenizer tkz;
     protected NodeFactory factory;
 
@@ -11,7 +12,6 @@ public class ParseEvaluator {
         try {
             this.tkz = new Tokenizer(src);
             factory = NodeFactory.instance();
-            this.city = city;
             // System.out.println("File: " + src);
         } catch (SyntaxError e) {
             System.out.println(e.getMessage());
@@ -80,11 +80,11 @@ public class ParseEvaluator {
     public Node parseAction() throws SyntaxError {
         if (tkz.peek(RegularExpression.DONE_REGEX)) {
             tkz.consume(RegularExpression.DONE_REGEX);
-            return factory.createDoneCommandNode(city);
+            return factory.createDoneCommandNode();
         } else if (tkz.peek(RegularExpression.RELOCATE_REGEX)) {
             tkz.consume(RegularExpression.RELOCATE_REGEX);
             String direction = parseDirection();
-            return factory.createRelocateCommandNode(city,direction);
+            return factory.createRelocateCommandNode(direction);
         } else if (tkz.peek(RegularExpression.MOVE_REGEX)) {
             return parseMoveCommand();
         } else if (tkz.peek(RegularExpression.INVEST_REGEX) || tkz.peek(RegularExpression.COLLECT_REGEX)){
@@ -92,7 +92,7 @@ public class ParseEvaluator {
         } else if (tkz.peek(RegularExpression.SHOOT_REGEX)) {
             return parseAttackCommandNode();
         }else {
-            return factory.createActionCommandNode(RegularExpression.ACTION_REGEX, city);
+            return factory.createActionCommandNode(RegularExpression.ACTION_REGEX);
         }
     }
 
@@ -102,7 +102,7 @@ public class ParseEvaluator {
             tkz.consume(RegularExpression.MOVE_REGEX);
         }
         String direction = parseDirection();
-        return factory.createMoveCommandNode(direction, city);
+        return factory.createMoveCommandNode(direction);
     }
 
     // Direction → up|down|upleft|upright|downleft|downright
@@ -119,11 +119,11 @@ public class ParseEvaluator {
         Node expressionNode = parseExpression();
 
         if (invest.matches(RegularExpression.INVEST_REGEX)) {
-            return factory.createInvestCommandNode(expressionNode, city);
+            return factory.createInvestCommandNode(expressionNode);
         } else if (collect.matches(RegularExpression.COLLECT_REGEX)) {
-            return factory.createCollectCommandNode(expressionNode, city);
+            return factory.createCollectCommandNode(expressionNode);
         }
-        return factory.createRegionCommandNode(expressionNode, city);
+        return factory.createRegionCommandNode(expressionNode);
     }
 
     // AttackCommand → shoot Direction Expression
@@ -229,10 +229,10 @@ public class ParseEvaluator {
             Node infoNode = null;
             if(tkz.peek(RegularExpression.OPPONENT_REGEX)){
                 tkz.consume();
-                infoNode = factory.createInfoExpressionNode("opponent", "", city);
+                infoNode = factory.createInfoExpressionNode("opponent", "");
             }else if(tkz.peek(RegularExpression.NEARBY_REGEX)) {
                 tkz.consume();
-                infoNode = factory.createInfoExpressionNode("nearby", parseDirection(), city);
+                infoNode = factory.createInfoExpressionNode("nearby", parseDirection());
             }
             return infoNode;
         }else if(tkz.peek(RegularExpression.NUMBER_REGEX)){
@@ -263,9 +263,9 @@ public class ParseEvaluator {
 
         if(type.matches(RegularExpression.NEARBY_REGEX)){
             String direction = parseDirection();
-            return factory.createInfoExpressionNode(type, direction, city);
+            return factory.createInfoExpressionNode(type, direction);
         }else if(type.matches(RegularExpression.OPPONENT_REGEX)){
-            return factory.createInfoExpressionNode(type,"", city);
+            return factory.createInfoExpressionNode(type,"");
         }else{
             throw new SyntaxError("parseInfoExpression() has something wrong");
         }
@@ -281,6 +281,6 @@ public class ParseEvaluator {
             return factory.createRandNumNode();
         }
         tkz.consume(RegularExpression.VARIABLE_REGEX);
-        return factory.createVariableNode(identifier, city.getVariables());
+        return factory.createVariableNode(identifier, new HashMap<>());
     }
 }

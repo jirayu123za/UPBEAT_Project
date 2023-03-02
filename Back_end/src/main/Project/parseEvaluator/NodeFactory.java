@@ -1,7 +1,6 @@
 package Project.parseEvaluator;
 
 import Project.parseEvaluator.nodes.*;
-import Project.CityCrew;
 
 import java.util.*;
 public class NodeFactory {
@@ -27,8 +26,8 @@ public class NodeFactory {
     }
 
     // create a new move command node
-    public Node createMoveCommandNode(String direction, CityCrew city){
-        return new MoveCommandNode(direction, city);
+    public Node createMoveCommandNode(String direction){
+        return new MoveCommandNode(direction);
     }
 
     // create a new attack command node
@@ -62,8 +61,8 @@ public class NodeFactory {
     }
 
     // create a new info node
-    public Node createInfoExpressionNode(String type, String direction, CityCrew city){
-        return new InfoExpressionNode(type, direction, city);
+    public Node createInfoExpressionNode(String type, String direction){
+        return new InfoExpressionNode(type, direction);
     }
 
     // create a new VariableNode node by rand
@@ -72,32 +71,32 @@ public class NodeFactory {
     }
 
     // create a new collect command node
-    public Node createCollectCommandNode(Node expressionNode, CityCrew city){
-        return new CollectCommandNode(expressionNode, city);
+    public Node createCollectCommandNode(Node expressionNode){
+        return new CollectCommandNode(expressionNode);
     }
 
     // create a new invest command node
-    public Node createInvestCommandNode(Node expressionNode, CityCrew city){
-        return new InvestCommandNode(expressionNode, city);
+    public Node createInvestCommandNode(Node expressionNode){
+        return new InvestCommandNode(expressionNode);
     }
 
     // create a new relocate command node
-    public Node createRelocateCommandNode(CityCrew city, String direction){
-        return new RelocateCommandNode(city, direction);
+    public Node createRelocateCommandNode(String direction){
+        return new RelocateCommandNode(direction);
     }
 
     // create a new region command node
-    public RegionCommandNode createRegionCommandNode(Node expressionNode, CityCrew city){
-        return new RegionCommandNode(expressionNode, city);
+    public RegionCommandNode createRegionCommandNode(Node expressionNode){
+        return new RegionCommandNode(expressionNode);
     }
 
     // create a new done command node
-    public DoneCommandNode createDoneCommandNode(CityCrew city){
-        return new DoneCommandNode(city);
+    public DoneCommandNode createDoneCommandNode(){
+        return new DoneCommandNode();
     }
 
     // create a new action command node
-    public ActionCommandNode createActionCommandNode(String action, CityCrew city){
-        return new ActionCommandNode(action, city);
+    public ActionCommandNode createActionCommandNode(String action){
+        return new ActionCommandNode(action);
     }
 }

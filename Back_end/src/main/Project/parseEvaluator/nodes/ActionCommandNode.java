@@ -1,13 +1,10 @@
 package Project.parseEvaluator.nodes;
-import Project.CityCrew;
 
 public class ActionCommandNode implements Node{
     protected String action;
-    protected CityCrew city;
 
-    public ActionCommandNode(String action, CityCrew city){
+    public ActionCommandNode(String action){
         this.action = action;
-        this.city = city;
     }
 
 

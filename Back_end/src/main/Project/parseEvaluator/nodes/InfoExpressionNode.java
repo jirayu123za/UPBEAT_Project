@@ -4,17 +4,15 @@ import Project.CityCrew;
 public class InfoExpressionNode implements Node{
     protected String type;
     protected String direction;
-    protected CityCrew city;
 
-    public InfoExpressionNode(String type, String direction, CityCrew city){
+    public InfoExpressionNode(String type, String direction){
         this.type = type;
         this.direction = direction;
-        this.city = city;
     }
 
     @Override
     public double evaluate() {
-        return city.getOpponentLocation();
+        return 0;
     }
 
     @Override
