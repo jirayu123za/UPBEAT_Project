@@ -8,7 +8,7 @@ public class ParseEvaluator {
     protected Tokenizer tkz;
     protected NodeFactory factory;
 
-    public ParseEvaluator(String src, CityCrew city) {
+    public ParseEvaluator(String src) {
         try {
             this.tkz = new Tokenizer(src);
             factory = NodeFactory.instance();
