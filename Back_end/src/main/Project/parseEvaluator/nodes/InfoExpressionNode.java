@@ -1,5 +1,4 @@
 package Project.parseEvaluator.nodes;
-import Project.CityCrew;
 
 public class InfoExpressionNode implements Node{
     protected String type;
