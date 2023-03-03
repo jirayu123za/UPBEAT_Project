@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class RegularExpression {
     // String direction
-    public static final String DIRECTION_REGEX = " up|down|upleft|upright|downleft|downright";
+    public static final String DIRECTION_REGEX = "up|down|upleft|upright|downleft|downright";
     public static final String UP_REGEX = "up";
     public static final String DOWN_REGEX = "down";
     public static final String UPLEFT_REGEX = "upleft";
@@ -23,7 +23,7 @@ public class RegularExpression {
     // String action, done, move, relocate, invest, collect, shoot
     public static final String ACTION_REGEX = "done|relocate|move|invest|collect|shoot";
     public static final String DONE_REGEX = "done";
-    public static final String MOVE_REGEX = "move";
+    public static final String MOVE_REGEX = "move|m";
     public static final String RELOCATE_REGEX = "relocate";
     public static final String INVEST_REGEX = "invest";
     public static final String COLLECT_REGEX = "collect";
@@ -50,7 +50,7 @@ public class RegularExpression {
     public static final String RANDOM_REGEX = "random";
 
     // String all
-    public static final String ALL_REGEX = "([-+*/%^])|(=)|([({})])|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|done|relocate|move|invest|collect|shoot|up|down|if|then|else|while|opponent|nearby)[a-zA-Z0-9]+)|(upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|virus|antibody|nearby)|([a-zA-Z]+[a-zA-Z0-9]*)|([^ \\\\r\\\\n]+)";
+    public static final String ALL_REGEX = "([-+*/%^])|(=)|([({})])|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|done|relocate|move|invest|collect|shoot|up|down|if|then|else|while|opponent|nearby)[a-zA-Z0-9]+)|(upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|nearby)|([a-zA-Z]+[a-zA-Z0-9]*)|([^ \\\\r\\\\n]+)";
 
 
 
