@@ -10,8 +10,9 @@ public class Tokenizer {
     public Tokenizer(String constructionPlan) throws SyntaxError {
         this.ConstructionPlan = constructionPlan;
         tokens = new ArrayList<>();
-
         matcher = RegularExpression.ALL_PATTERN.matcher(ConstructionPlan);
+
+        //System.out.println("tok | ConstructionPlan: " + ConstructionPlan);
         computeNext();
     }
 
@@ -42,9 +43,10 @@ public class Tokenizer {
 
     void consume(String RegularExpression) throws SyntaxError {
             if(peek().matches(RegularExpression)){
+                //System.out.println(RegularExpression);
                 consume();
             }else {
-                throw new SyntaxError("consume(s): token does not match s");
+                throw new SyntaxError("consume(string): token does not match string ");
             }
     }
 
