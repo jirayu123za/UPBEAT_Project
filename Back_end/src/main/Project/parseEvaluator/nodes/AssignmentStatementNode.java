@@ -17,6 +17,13 @@ public class AssignmentStatementNode implements Node{
 
     @Override
     public void print(int height) {
-
+        for(int i = 0 ; i < height; ++i){
+            System.out.print("   ");
+        }
+        System.out.print(" |---Assign ");
+        variableNode.print(0);
+        System.out.print(" = ");
+        expressionNode.print(0);
+        System.out.println(" EQUALS " + expressionNode.evaluate());
     }
 }

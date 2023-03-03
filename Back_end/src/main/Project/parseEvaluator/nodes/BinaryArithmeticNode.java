@@ -41,6 +41,11 @@ public class BinaryArithmeticNode implements Node{
 
     @Override
     public void print(int height) {
-
+        for(int i = 0 ; i < height; ++i){
+            System.out.print("   ");
+        }
+        left.print(0);
+        System.out.print(" " + op + " ");
+        right.print(0);
     }
 }

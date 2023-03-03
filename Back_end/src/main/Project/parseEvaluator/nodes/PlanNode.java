@@ -22,6 +22,14 @@ public class PlanNode implements Node{
 
     @Override
     public void print(int height) {
-
+        for (int i = 0; i < height; ++i) {
+            System.out.print("   ");
+        }
+        System.out.print(" |---Program ");
+        for (Node stm : statements) {
+            System.out.println(" ");
+            stm.print(height + 1);
+        }
+        System.out.println();
     }
 }

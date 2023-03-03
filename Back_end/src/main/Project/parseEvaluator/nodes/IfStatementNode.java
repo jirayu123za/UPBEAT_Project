@@ -23,6 +23,13 @@ public class IfStatementNode implements Node{
 
     @Override
     public void print(int height) {
-
+        for(int i = 0 ; i < height; ++i){
+            System.out.print("   ");
+        }
+        System.out.print(" |---If ");
+        expressionNode.print(0);
+        System.out.println();
+        ifTrueStatementNode.print(height+1);
+        ifFalseStatementNode.print(height+1);
     }
 }
