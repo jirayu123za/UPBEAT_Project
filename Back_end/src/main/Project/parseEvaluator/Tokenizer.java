@@ -1,54 +1,56 @@
 package Project.parseEvaluator;
 import java.util.*;
-import java.util.regex.Matcher;
 
-public class Tokenizer {
-    protected List<String> tokens;
-    protected String next, ConstructionPlan;
-    protected Matcher matcher;
+public class Tokenizer{
+    protected final Queue<String> tokens;
+    protected String ConstructionPlan;
 
-    public Tokenizer(String constructionPlan) throws SyntaxError {
-        this.ConstructionPlan = constructionPlan;
-        tokens = new ArrayList<>();
-        matcher = RegularExpression.ALL_PATTERN.matcher(ConstructionPlan);
-
-        //System.out.println("tok | ConstructionPlan: " + ConstructionPlan);
-        computeNext();
-    }
-
-    private void computeNext(){
-        if(matcher.find()){
-            next = matcher.group();
-        }else{
-            next = null;
+    public Tokenizer(String ConstructionPlan){
+        this.ConstructionPlan = ConstructionPlan;
+        tokens = new LinkedList<>();
+        String[] strings = RegularExpression.SPLIT_PATTERN.split(ConstructionPlan);
+        for(String s : strings){
+            if(!s.trim().isEmpty()){
+                tokens.add(s);
+            }
         }
     }
 
-    public String peek(){
-        return next;
+    public boolean hasNextToken(){
+        return tokens.isEmpty();
+    }
+
+    public boolean isNumber(String RegularExpression){
+        try{
+            Double.parseDouble(RegularExpression);
+            return true;
+        }catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    public String peek() throws SyntaxError{
+        if(tokens.isEmpty()){
+            throw new SyntaxError("!!---EMPTY---!!");
+        }
+        return tokens.element();
+    }
+
+    public boolean peek(String RegularExpression){
+        return !tokens.isEmpty() && tokens.element().equals(RegularExpression);
     }
 
     public String consume(){
-        String result = next;
-        computeNext();
-
-        return result;
+        return tokens.remove();
     }
 
-    boolean peek(String RegularExpression){
-        if(peek() != null)
-            return peek().matches(RegularExpression);
-        return false;
+    public void consume(String RegularExpression) throws SyntaxError {
+        if (!peek(RegularExpression)) {
+            throw new SyntaxError("!!---Error---!!");
+        }
+        consume();
     }
 
-    void consume(String RegularExpression) throws SyntaxError {
-            if(peek().matches(RegularExpression)){
-                //System.out.println(RegularExpression);
-                consume();
-            }else {
-                throw new SyntaxError("consume(string): token does not match string ");
-            }
-    }
 
 
 }

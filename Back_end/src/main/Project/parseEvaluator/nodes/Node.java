@@ -1,6 +1,7 @@
 package Project.parseEvaluator.nodes;
+import java.util.Map;
 
 public interface Node {
-    public double evaluate();
-    public void print(int height);
+    double evaluate(Map<String,Integer> bindings);
+    void print(int height, Map<String,Integer> bindings);
 }
