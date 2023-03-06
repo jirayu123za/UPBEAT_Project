@@ -22,8 +22,9 @@ public class RegularExpression {
 
     // String action, done, move, relocate, invest, collect, shoot
     public static final String ACTION_REGEX = "done|relocate|move|invest|collect|shoot";
+    public static final String REGION_REGEX = "invest|collect";
     public static final String DONE_REGEX = "done";
-    public static final String MOVE_REGEX = "move|m";
+    public static final String MOVE_REGEX = "move";
     public static final String RELOCATE_REGEX = "relocate";
     public static final String INVEST_REGEX = "invest";
     public static final String COLLECT_REGEX = "collect";
@@ -50,9 +51,10 @@ public class RegularExpression {
     public static final String RANDOM_REGEX = "random";
 
     // String all
-    public static final String ALL_REGEX = "([-+*/%^])|(=)|([({})])|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|done|relocate|move|invest|collect|shoot|up|down|if|then|else|while|opponent|nearby)[a-zA-Z0-9]+)|(upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|nearby)|([a-zA-Z]+[a-zA-Z0-9]*)|([^ \\\\r\\\\n]+)";
+    public static final String ALL_REGEX = "([-+*/%^])|(=)|([({})])|([0-9]+[.]*[0-9]+)|([0-9]+)|((upleft|upright|downleft|downright|done|relocate|move|invest|collect|shoot|up|down|if|then|else|while|opponent|nearby)[a-zA-Z0-9]+)|(upleft|upright|downleft|downright|move|shoot|left|right|up|down|if|then|else|while|nearby)|([a-zA-Z]+[a-zA-Z0-9]*)|([^ \\r\\n]+)";
 
-
+    // String split
+    public static final String SPLIT_REGEX = ("([\\s]++)|(?<=[=+\\-*/%(){}^])|(?=[=+\\-*/%(){}^])");
 
     // Pattern direction
     public static final Pattern DIRECTION_PATTERN = Pattern.compile(DIRECTION_REGEX);
@@ -73,6 +75,7 @@ public class RegularExpression {
 
     // Pattern action, done, move, relocate, invest, collect, shoot
     public static final Pattern ACTION_PATTERN = Pattern.compile(ACTION_REGEX);
+    public static final Pattern REGION_PATTERN = Pattern.compile(REGION_REGEX);
     public static final Pattern DONE_PATTERN = Pattern.compile(DONE_REGEX);
     public static final Pattern MOVE_PATTERN = Pattern.compile(MOVE_REGEX);
     public static final Pattern RELOCATE_PATTERN = Pattern.compile(RELOCATE_REGEX);
@@ -102,4 +105,7 @@ public class RegularExpression {
 
     // Pattern all
     public static final Pattern ALL_PATTERN = Pattern.compile(ALL_REGEX);
+
+    // Pattern split
+    public static final Pattern SPLIT_PATTERN = Pattern.compile(SPLIT_REGEX);
 }
