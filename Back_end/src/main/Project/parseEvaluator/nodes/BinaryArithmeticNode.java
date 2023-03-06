@@ -1,4 +1,5 @@
 package Project.parseEvaluator.nodes;
+import java.util.Map;
 
 public class BinaryArithmeticNode implements Node{
     protected Node left, right;
@@ -11,41 +12,44 @@ public class BinaryArithmeticNode implements Node{
     }
 
     @Override
-    public double evaluate() throws ArithmeticException{
-        double LeftValue = left.evaluate();
-        double RightValue = right.evaluate();
+    public double evaluate(Map<String, Integer> bindings) throws ArithmeticException {
+        if(bindings == null) {
+            throw new ArithmeticException("bindings == null");
+        }
+        double LeftValue = left.evaluate(bindings);
+        double RightValue = right.evaluate(bindings);
 
-        if (op.equals("+"))
+        if(op.equals("+"))
             return LeftValue + RightValue;
-        if (op.equals("-"))
+        if(op.equals("-"))
             return LeftValue - RightValue;
-        if (op.equals("*"))
+        if(op.equals("*"))
             return LeftValue * RightValue;
-        if (op.equals("/")){
-            if(RightValue == 0){
+        if(op.equals("/")){
+            if (RightValue == 0){
                 throw new ArithmeticException("Divide by zero");
             }
-            return Math.floor(LeftValue / RightValue);
-        }
-        if (op.equals("%")){
+                return Math.floor(LeftValue / RightValue);
+            }
+        if(op.equals("%")){
             if(RightValue == 0){
                 throw new ArithmeticException("Modulo by zero");
             }
-            return LeftValue % RightValue;
-        }
-        if (op.equals("^")){
-            return Math.pow(LeftValue, RightValue);
+                return LeftValue % RightValue;
+            }
+        if(op.equals("^")){
+                return Math.pow(LeftValue, RightValue);
         }
         throw new ArithmeticException("Unknown op: " + op);
     }
 
     @Override
-    public void print(int height) {
+    public void print(int height, Map<String,Integer> bindings) {
         for(int i = 0 ; i < height; ++i){
             System.out.print("   ");
         }
-        left.print(0);
+        left.print(0, bindings);
         System.out.print(" " + op + " ");
-        right.print(0);
+        right.print(0, bindings);
     }
 }

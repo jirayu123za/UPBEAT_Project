@@ -1,29 +1,30 @@
 package Project.parseEvaluator.nodes;
+import java.util.*;
 
 public class AssignmentStatementNode implements Node{
-    protected VariableNode variableNode;
+    protected VariableExpressionNode variableExpressionNode;
     protected Node expressionNode;
 
-    public AssignmentStatementNode(VariableNode variableNode, Node expressionNode){
-        this.variableNode = variableNode;
+    public AssignmentStatementNode(VariableExpressionNode variableExpressionNode, Node expressionNode){
+        this.variableExpressionNode = variableExpressionNode;
         this.expressionNode = expressionNode;
     }
 
     @Override
-    public double evaluate() {
-        variableNode.assignValue(expressionNode.evaluate());
+    public double evaluate(Map<String, Integer> bindings) {
+        variableExpressionNode.assignValue(expressionNode.evaluate(bindings));
         return 0;
     }
 
     @Override
-    public void print(int height) {
+    public void print(int height, Map<String, Integer> bindings) {
         for(int i = 0 ; i < height; ++i){
             System.out.print("   ");
         }
         System.out.print(" |---Assign ");
-        variableNode.print(0);
+        variableExpressionNode.print(0,bindings);
         System.out.print(" = ");
-        expressionNode.print(0);
-        System.out.println(" EQUALS " + expressionNode.evaluate());
+        expressionNode.print(0,bindings);
+        System.out.println();
     }
 }
