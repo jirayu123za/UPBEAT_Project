@@ -1,16 +1,16 @@
 package Project.parseEvaluator.nodes;
 import java.util.*;
 
-public class RandNumNode extends VariableNode {
+public class RandNumExpressionNode extends VariableExpressionNode {
     protected Random rand;
 
-    public RandNumNode(){
+    public RandNumExpressionNode(){
         rand = new Random();
         identifier = "random";
     }
 
     @Override
-    public double evaluate(){
+    public double evaluate(Map<String, Integer> bindings){
         return rand.nextInt()%1000;
     }
 
@@ -18,5 +18,4 @@ public class RandNumNode extends VariableNode {
     public void assignValue(double value){
         // no-op
     }
-
 }
