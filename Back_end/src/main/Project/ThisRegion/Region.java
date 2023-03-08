@@ -1,4 +1,6 @@
-package Project;
+package Project.ThisRegion;
+
+import Project.ThisPlayer.PlayerConfig;
 
 public class Region {
     // Variable
@@ -64,37 +66,37 @@ public class Region {
         this.owner = owner;
     }
 
-    public void invest(int investmentAmount, Player player){
+    public void invest(int investmentAmount, PlayerConfig playerConfig){
         int totalCost = investmentAmount + 1;
 
-        if(player.hasEnoughBudget(totalCost)){
-            if(owner == null || owner.equals(player.getName()) || isAdjacentToPlayerRegion(player) ){
+        if(playerConfig.hasEnoughBudget(totalCost)){
+            if(owner == null || owner.equals(playerConfig.getName()) || isAdjacentToPlayerRegion(playerConfig) ){
                 int newDeposit = (int) Math.min(deposit + investmentAmount, max_deposit);
                 deposit = newDeposit;
-                player.decreaseBudget(totalCost);
+                playerConfig.decreaseBudget(totalCost);
             }
         }else{
-            player.setOutOfBudget();
+            playerConfig.setOutOfBudget();
         }
     }
 
-    public void collect(int collectionAmount, Player player){
+    public void collect(int collectionAmount, PlayerConfig playerConfig){
         int totalCost = 1;
 
-        if(player.hasEnoughBudget(totalCost)){
+        if(playerConfig.hasEnoughBudget(totalCost)){
             if(collectionAmount <= deposit){
                 deposit -= collectionAmount;
-                player.decreaseBudget(totalCost);
+                playerConfig.decreaseBudget(totalCost);
             }
         }else{
-            player.setOutOfBudget();
+            playerConfig.setOutOfBudget();
         }
     }
 
-    public boolean isAdjacentToPlayerRegion(Player player){
-        for(Region adjacentRegion : player.getAdjacentRegions(this.pos_xAxis, this.pos_yAxis)){
+    public boolean isAdjacentToPlayerRegion(PlayerConfig playerConfig){
+        for(Region adjacentRegion : playerConfig.getAdjacentRegions(this.pos_xAxis, this.pos_yAxis)){
             if(Math.abs(adjacentRegion.pos_xAxis - this.pos_xAxis) <= 1 && Math.abs(adjacentRegion.pos_yAxis - this.pos_yAxis) <= 1) {
-                if (adjacentRegion.owner != null && adjacentRegion.owner.equals(player.getName())) {
+                if (adjacentRegion.owner != null && adjacentRegion.owner.equals(playerConfig.getName())) {
                     return true;
                 }
             }

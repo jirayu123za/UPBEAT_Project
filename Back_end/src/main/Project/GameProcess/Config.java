@@ -1,13 +1,12 @@
-package Project;
-
+package Project.GameProcess;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Config {
-    static int m;
-    static int n;
+    static int rows;
+    static int cols;
     static int init_plan_min;
     static int init_plan_sec;
     static long init_budget;
@@ -33,7 +32,7 @@ public class Config {
 
         }
         catch (FileNotFoundException e) {
-            System.out.println("File not found <- From Project.Config");
+            System.out.println("File not found <- From Project.GameProcess.Config");
         }
         catch (IOException e) {
             e.printStackTrace();

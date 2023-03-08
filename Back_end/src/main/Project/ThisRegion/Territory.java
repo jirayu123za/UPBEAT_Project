@@ -1,4 +1,6 @@
-package Project;
+package Project.ThisRegion;
+
+import Project.ThisRegion.Region;
 
 public class Territory {
     // Variable

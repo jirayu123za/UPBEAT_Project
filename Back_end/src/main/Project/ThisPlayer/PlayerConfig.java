@@ -1,11 +1,43 @@
-package Project;
+package Project.ThisPlayer;
+import Project.PersonalInfo;
+import Project.ThisRegion.Territory;
+import Project.ThisRegion.Region;
+
 import java.util.*;
 
-public class Player {
+public class PlayerConfig implements Player{
     // Variable
-    protected long init_budget;
-
+    protected int id;
     protected String name;
+    protected long budget;
+
+    public PlayerConfig(int id, String name, long budget){
+        this.id = id;
+        this.name = name;
+        this.budget = budget;
+    }
+
+    @Override
+    public int getID() {
+        return id;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public long getBudget() {
+        return budget;
+    }
+
+    @Override
+    public boolean updateBudget(long amount) {
+        return false;
+    }
+
+    /*
     protected int playerTurn = 0;
     protected boolean outOfBudget = false;
     protected PersonalInfo CityCrew = null;
@@ -16,9 +48,9 @@ public class Player {
     protected ArrayList<PersonalInfo> RegionProcess = new ArrayList<>();
 
     // Constructor
-    public Player(String name, long init_budget, long x, long y, Territory territory){
+    public PlayerConfig(String name, long budget, long x, long y, Territory territory){
         this.name = name;
-        this.init_budget = init_budget;
+        this.budget = budget;
         this.territory = territory;
         CityCrew = new PersonalInfo();   // need implement
         CityCenter = new PersonalInfo(); // need implement
@@ -27,11 +59,11 @@ public class Player {
 
     // method
     public boolean hasEnoughBudget(long amount){
-        return init_budget >= amount;
+        return budget >= amount;
     }
 
     public void decreaseBudget(long amount){
-        init_budget -= amount;
+        budget -= amount;
     }
 
     public void setOutOfBudget() {
@@ -51,20 +83,20 @@ public class Player {
     }
 
     // Getters and Setters
-    public long getInit_budget() {
-        return init_budget;
+    public long getbudget() {
+        return budget;
     }
 
-    public void setInit_budget(long init_budget) {
-        this.init_budget = init_budget;
+    public void setbudget(long budget) {
+        this.budget = budget;
     }
 
     public long getBudget() {
-        return init_budget;
+        return budget;
     }
 
     public void setBudget(long budget) {
-        this.init_budget = budget;
+        this.budget = budget;
     }
 
     public boolean isOutOfBudget() {
@@ -123,7 +155,7 @@ public class Player {
     public void setTerritory(Territory territory) {
         this.territory = territory;
     }
-
+*/
 
 
 }

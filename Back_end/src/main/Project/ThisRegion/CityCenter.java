@@ -1,4 +1,4 @@
-package Project;
+package Project.ThisRegion;
 
 public class CityCenter {
     // variable
