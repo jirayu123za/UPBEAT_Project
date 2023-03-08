@@ -34,7 +34,9 @@ public class PlayerConfig implements Player{
 
     @Override
     public boolean updateBudget(long amount) {
-        return false;
+        boolean totalBudget = budget + amount >= 0;
+        budget = Math.max(0, budget + amount);
+        return totalBudget;
     }
 
     /*
