@@ -13,7 +13,7 @@ public interface Game {
     Region regionOn(Position position);
     Region cityCrewRegion();
 
-    boolean attack(DirectionNode direction, long totalPay);
+    boolean attack(DirectionNode direction, long totalValue);
     boolean collect(long totalValue);
     boolean invest(long totalValue);
     boolean relocate();
