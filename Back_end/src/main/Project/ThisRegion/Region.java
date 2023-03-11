@@ -6,7 +6,7 @@ public interface Region {
     Player getOwner();
 
     boolean isCityCenter();
-    boolean changeCityCenter();
+    void changeCityCenter();
 
     Position getLocation();
     long getDeposit();
