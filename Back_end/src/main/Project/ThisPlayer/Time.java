@@ -1,4 +1,4 @@
-package Project;
+package Project.ThisPlayer;
 
 public class Time {
     protected double deltaTime;
