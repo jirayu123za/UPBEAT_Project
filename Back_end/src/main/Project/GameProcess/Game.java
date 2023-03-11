@@ -6,6 +6,7 @@ import java.util.*;
 
 public interface Game {
     Player getPlayer1();
+    Player getPlayer2();
     Player getCurrentPlayer();
     Player getWin();
 
@@ -25,7 +26,6 @@ public interface Game {
     long opponent();
     long nearby(DirectionNode direction);
     long budget();
-    long getTurn();
 
-    void getConstructionPlan();
+    void getConstructionPlan(String constructionPlan);
 }
