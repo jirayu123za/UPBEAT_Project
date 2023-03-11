@@ -17,4 +17,12 @@ public class PositionConfig implements Position{
     public long getPosY() {
         return y;
     }
+
+    @Override
+    public boolean equals(Object point){
+        if(!(point instanceof Position position)){
+            return false;
+        }
+        return position.getPosX() == x && position.getPosY() == y;
+    }
 }
