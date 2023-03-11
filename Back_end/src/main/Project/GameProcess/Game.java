@@ -19,6 +19,9 @@ public interface Game {
     boolean relocate();
     boolean move(DirectionNode direction);
 
+    Map<String, Long> identifiers();
+    Map<String, Long> specialIdentifiers();
+
     long opponent();
     long nearby(DirectionNode direction);
     long budget();
