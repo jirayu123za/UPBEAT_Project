@@ -2,14 +2,14 @@ package Project.parseEvaluator.nodes;
 import java.util.Map;
 
 public class NumberNode implements Node{
-    protected double value;
+    protected long value;
 
-    public NumberNode(double value){
+    public NumberNode(long value){
         this.value = value;
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings){
+    public long evaluate(Map<String, Integer> bindings){
         if(bindings == null){
             throw new IllegalArgumentException("bindings == null");
         }

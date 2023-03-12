@@ -12,12 +12,12 @@ public class BinaryArithmeticNode implements Node{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) throws ArithmeticException {
+    public long evaluate(Map<String, Integer> bindings) throws ArithmeticException {
         if(bindings == null) {
             throw new ArithmeticException("bindings == null");
         }
-        double LeftValue = left.evaluate(bindings);
-        double RightValue = right.evaluate(bindings);
+        long LeftValue = left.evaluate(bindings);
+        long RightValue = right.evaluate(bindings);
 
         if(op.equals("+"))
             return LeftValue + RightValue;
@@ -29,7 +29,7 @@ public class BinaryArithmeticNode implements Node{
             if (RightValue == 0){
                 throw new ArithmeticException("Divide by zero");
             }
-                return Math.floor(LeftValue / RightValue);
+                return (long) Math.floor(LeftValue / RightValue);
             }
         if(op.equals("%")){
             if(RightValue == 0){
@@ -38,7 +38,7 @@ public class BinaryArithmeticNode implements Node{
                 return LeftValue % RightValue;
             }
         if(op.equals("^")){
-                return Math.pow(LeftValue, RightValue);
+                return (long) Math.pow(LeftValue, RightValue);
         }
         throw new ArithmeticException("Unknown op: " + op);
     }

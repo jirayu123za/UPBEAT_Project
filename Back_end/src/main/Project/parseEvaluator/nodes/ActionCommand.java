@@ -12,7 +12,7 @@ public class ActionCommand extends CommandNode{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         if(action.equals(RegularExpression.DONE_REGEX)){
             // Need Done in game action
             System.out.println(RegularExpression.DONE_REGEX);

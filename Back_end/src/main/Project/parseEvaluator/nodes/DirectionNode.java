@@ -14,7 +14,7 @@ public class DirectionNode implements Node{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings){
+    public long evaluate(Map<String, Integer> bindings){
         return 0;
     }
 

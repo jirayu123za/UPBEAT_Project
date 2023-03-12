@@ -10,12 +10,12 @@ public class RandNumExpressionNode extends VariableExpressionNode {
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings){
+    public long evaluate(Map<String, Integer> bindings){
         return rand.nextInt()%1000;
     }
 
     @Override
-    public void assignValue(double value){
+    public void assignValue(long value){
         // no-op
     }
 }

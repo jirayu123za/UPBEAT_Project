@@ -19,7 +19,7 @@ public class AttackCommand implements Node{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         // need implement shoot game action
         return 0;
     }

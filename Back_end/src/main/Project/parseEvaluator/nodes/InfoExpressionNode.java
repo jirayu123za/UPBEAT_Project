@@ -11,7 +11,7 @@ public class InfoExpressionNode implements Node{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         if(type.equals("opponent")){
             // need implement
         }else{

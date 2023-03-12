@@ -11,7 +11,7 @@ public class AssignmentStatementNode implements Node{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         variableExpressionNode.assignValue(expressionNode.evaluate(bindings));
         return 0;
     }

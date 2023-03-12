@@ -11,7 +11,7 @@ public class RegionCommand extends CommandNode{
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         /*Need implement*/
         return 0;
     }

@@ -2,27 +2,27 @@ package Project.parseEvaluator.nodes;
 
 import java.util.*;
 public class VariableExpressionNode implements Node{
-    protected Map<String,Double> variable = null;
+    protected Map<String,Long> variable = null;
     protected String identifier;
 
     public VariableExpressionNode(){}
-    public VariableExpressionNode(String identifier, Map<String,Double> variable){
+    public VariableExpressionNode(String identifier, Map<String,Long> variable){
         this.variable = variable;
         this.identifier = identifier;
         if(!variable.containsKey(identifier)){
-            variable.put(identifier, 0.0);
+            variable.put(identifier, (long) 0.0);
         }
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         if(!variable.containsKey(identifier)){
-            variable.put(identifier, 0.0);
+            variable.put(identifier, (long) 0.0);
         }
         return variable.get(identifier);
     }
 
-    public void assignValue(double value){
+    public void assignValue(long value){
         variable.put(identifier, value);
     }
 

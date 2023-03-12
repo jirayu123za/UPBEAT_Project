@@ -28,7 +28,7 @@ public class PlanNode implements Node{
 
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
+    public long evaluate(Map<String, Integer> bindings) {
         setIterator();
         while(hasNext()){
             Node statementNode = nextStatement();

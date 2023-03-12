@@ -254,7 +254,7 @@ public class ParseEvaluator {
         System.out.println("parseFactor " + tkz.peek() + "\n");
         Node power = parsePower();
 
-        if(tkz.peek().equals("\\^")){
+        if(tkz.peek().equals("^")){
             tkz.consume();
             return factory.createBinaryArithmeticNode(power, "^", parseFactory());
         }
