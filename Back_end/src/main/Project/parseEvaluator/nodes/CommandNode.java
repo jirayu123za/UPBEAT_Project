@@ -1,3 +1,3 @@
 package Project.parseEvaluator.nodes;
-public abstract class CommandNode implements Node{
+public abstract class CommandNode extends ExecuteNode{
 }

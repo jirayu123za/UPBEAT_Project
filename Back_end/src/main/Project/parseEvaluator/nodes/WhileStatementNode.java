@@ -1,33 +1,27 @@
 package Project.parseEvaluator.nodes;
-import java.util.*;
 
-public class WhileStatementNode implements Node{
-    Node expressionNode;
-    Node statementNode;
+import Project.GameProcess.Game;
 
-    public WhileStatementNode(Node expressionNode, Node statementNode) {
-        if(expressionNode == null){
-            throw new IllegalArgumentException("Null == expressionNode");
+public class WhileStatementNode extends ConditionStatementNode{
+    protected int count = 0;
+
+    public WhileStatementNode(ExpressionNode expressionNode, ExecuteNode statementNode) {
+        super(expressionNode, statementNode, null);
+
+        if(trueStatement == null){
+            trueStatement = this;
         }
-        this.expressionNode = expressionNode;
-        this.statementNode = statementNode;
     }
 
     @Override
-    public double evaluate(Map<String, Integer> bindings) {
-        for (int counter = 0; counter < 10000 && expressionNode.evaluate(bindings) > 0; counter++){
-            statementNode.evaluate(bindings);
+    public boolean execute(Game bindings){
+        if(super.conditionNode.evaluate(bindings) > 0 && count < 1000){
+            count++;
+            if(!trueStatement.execute(bindings)){
+                return false;
+            }
+            return execute(bindings);
         }
-        return 0;
-    }
-
-    @Override
-    public void print(int height, Map<String, Integer> bindings) {
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
-        }
-        System.out.print(" |---While ");
-        expressionNode.print(0, bindings);
-        statementNode.print(height+1, bindings);
+        return true;
     }
 }

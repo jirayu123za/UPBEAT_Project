@@ -1,21 +1,17 @@
 package Project.parseEvaluator.nodes;
-import java.util.Map;
+import Project.GameProcess.Game;
 
-public class BinaryArithmeticNode implements Node{
-    protected Node left, right;
+public class BinaryArithmeticNode extends ExpressionNode{
+    protected ExpressionNode left, right;
     protected String op;
 
-    public BinaryArithmeticNode(Node left, String op, Node right) {
+    public BinaryArithmeticNode(ExpressionNode left, String op, ExpressionNode right) {
         this.left = left;
         this.op = op;
         this.right = right;
     }
 
-    @Override
-    public long evaluate(Map<String, Integer> bindings) throws ArithmeticException {
-        if(bindings == null) {
-            throw new ArithmeticException("bindings == null");
-        }
+    public long evaluate(Game bindings) throws ArithmeticException {
         long LeftValue = left.evaluate(bindings);
         long RightValue = right.evaluate(bindings);
 
@@ -44,12 +40,7 @@ public class BinaryArithmeticNode implements Node{
     }
 
     @Override
-    public void print(int height, Map<String,Integer> bindings) {
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
-        }
-        left.print(0, bindings);
-        System.out.print(" " + op + " ");
-        right.print(0, bindings);
+    public String toString() {
+        return String.format("(%s %s %s)", left.toString(), op, right.toString());
     }
 }

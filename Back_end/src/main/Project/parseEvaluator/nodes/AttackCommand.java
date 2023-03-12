@@ -1,34 +1,17 @@
 package Project.parseEvaluator.nodes;
-import Project.parseEvaluator.RegularExpression;
-import Project.parseEvaluator.SyntaxError;
+import Project.GameProcess.Game;
 
-import java.util.Map;
-
-public class AttackCommand implements Node{
-    protected String action;
-    protected Node expressionNode;
+public class AttackCommand extends CommandNode{
+    protected ExpressionNode expressionNode;
     protected DirectionNode direction;
 
-    public AttackCommand(String action, DirectionNode direction, Node expressionNode) throws SyntaxError {
-        if(!action.matches(RegularExpression.SHOOT_REGEX)){
-            throw new SyntaxError("Invalid action string: " + action);
-        }
-        this.action = action;
+    public AttackCommand(DirectionNode direction, ExpressionNode expressionNode){
         this.direction = direction;
         this.expressionNode = expressionNode;
     }
 
     @Override
-    public long evaluate(Map<String, Integer> bindings) {
-        // need implement shoot game action
-        return 0;
-    }
-
-    @Override
-    public void print(int height, Map<String, Integer> bindings) {
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
-        }
-        System.out.println(" |---Shoot " + direction);
+    public boolean execute(Game bindings) {
+        return bindings.attack(direction, expressionNode.evaluate(bindings));
     }
 }

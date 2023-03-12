@@ -1,33 +1,22 @@
 package Project.parseEvaluator.nodes;
+import Project.GameProcess.Game;
+
 import java.util.*;
 
-public class BlockStatementNode implements Node{
-    public LinkedList<Node> statements;
+public class BlockStatementNode extends ExecuteNode {
+    public LinkedList<ExecuteNode> statements;
 
-    public BlockStatementNode(LinkedList<Node> list){
-        this.statements = list;
-    }
-
-    public LinkedList<Node> getList(){
-        return statements;
+    public BlockStatementNode(LinkedList<ExecuteNode> statements){
+        this.statements = statements;
     }
 
     @Override
-    public long evaluate(Map<String, Integer> bindings){
-        for(Node node : statements){
-            node.evaluate(bindings);
+    public boolean execute(Game bindings) {
+        for(ExecuteNode statement : statements){
+            if(!statement.execute(bindings)){
+                return false;
+            }
         }
-        return 0;
-    }
-
-    @Override
-    public void print(int height, Map<String, Integer> bindings){
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
-        }
-        System.out.println(" |---BlockStatement");
-        for(Node statementNode : statements){
-            statementNode.print(height + 1, bindings);
-        }
+        return true;
     }
 }

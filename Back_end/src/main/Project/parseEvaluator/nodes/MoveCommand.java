@@ -1,26 +1,16 @@
 package Project.parseEvaluator.nodes;
-import java.util.Map;
+
+import Project.GameProcess.Game;
 
 public class MoveCommand extends CommandNode{
-    protected String move;
     protected DirectionNode direction;
 
-    public MoveCommand(String move, DirectionNode direction){
-        this.move = move;
+    public MoveCommand(DirectionNode direction){
         this.direction = direction;
     }
 
     @Override
-    public long evaluate(Map<String, Integer> bindings){
-        /*Need implement*/
-        return 0;
-    }
-
-    @Override
-    public void print(int height, Map<String, Integer> bindings) {
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
-        }
-        System.out.println(" |---Move " + direction);
+    public boolean execute(Game bindings) {
+        return bindings.move(direction);
     }
 }
