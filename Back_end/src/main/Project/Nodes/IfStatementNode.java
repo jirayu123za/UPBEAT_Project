@@ -1,4 +1,4 @@
-package Project.parseEvaluator.nodes;
+package Project.Nodes;
 
 public class IfStatementNode extends ConditionStatementNode{
     public IfStatementNode(ExpressionNode conditionNode, ExecuteNode trueStatement, ExecuteNode falseStatement) {

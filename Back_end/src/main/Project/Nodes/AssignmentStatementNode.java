@@ -1,4 +1,4 @@
-package Project.parseEvaluator.nodes;
+package Project.Nodes;
 import Project.GameProcess.Game;
 import java.util.Map;
 

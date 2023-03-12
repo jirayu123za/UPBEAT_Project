@@ -1,5 +1,5 @@
 package Project.parseEvaluator;
-import Project.parseEvaluator.nodes.*;
+import Project.Nodes.*;
 import org.junit.jupiter.api.Test;
 import Project.ConstructionPlanCombiner;
 import java.util.*;

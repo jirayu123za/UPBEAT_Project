@@ -1,4 +1,4 @@
-package Project.parseEvaluator.nodes;
+package Project.Nodes;
 
 public enum DirectionNode implements Node{
     up,

@@ -1,4 +1,4 @@
-package Project.parseEvaluator.nodes;
+package Project.Nodes;
 import java.util.*;
 
 public class PlanNode implements Node{

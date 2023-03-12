@@ -1,5 +1,5 @@
 package Project.parseEvaluator;
-import Project.parseEvaluator.nodes.*;
+import Project.Nodes.*;
 import java.util.*;
 
 public class ParseEvaluator {
