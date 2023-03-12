@@ -1,40 +1,46 @@
 package Project.parseEvaluator.nodes;
+import Project.GameProcess.Game;
 
-import java.util.*;
-public class VariableExpressionNode implements Node{
-    protected Map<String,Long> variable = null;
+public class VariableExpressionNode extends ExpressionNode{
+    protected long variable;
     protected String identifier;
 
-    public VariableExpressionNode(){}
-    public VariableExpressionNode(String identifier, Map<String,Long> variable){
+    public VariableExpressionNode(long variable){
         this.variable = variable;
+        this.identifier = null;
+    }
+    public VariableExpressionNode(String identifier){
+        this.variable = 0;
         this.identifier = identifier;
-        if(!variable.containsKey(identifier)){
-            variable.put(identifier, (long) 0.0);
+    }
+
+    @Override
+    public long evaluate(Game bindings) {
+        if(identifier == null){
+            return variable;
+        }else{
+            Long configVariable = bindings.specialIdentifiers().get(identifier);
+            if(configVariable != null){
+                return configVariable;
+            }
+            Long variable = bindings.identifiers().get(identifier);
+            if(variable == null){
+                throw new RuntimeException(identifier);
+            }
+            return variable;
+        }
+    }
+
+    public long evaluate(){
+        if(identifier == null){
+            return variable;
+        }else{
+            throw new RuntimeException(identifier);
         }
     }
 
     @Override
-    public long evaluate(Map<String, Integer> bindings) {
-        if(!variable.containsKey(identifier)){
-            variable.put(identifier, (long) 0.0);
-        }
-        return variable.get(identifier);
-    }
-
-    public void assignValue(long value){
-        variable.put(identifier, value);
-    }
-
-    public String getIdentifier(){
-        return getIdentifier();
-    }
-
-    @Override
-    public void print(int height, Map<String, Integer> bindings) {
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
-        }
-        System.out.print("<" + identifier + ">");
+    public String toString() {
+        return identifier != null ? identifier : String.valueOf(variable);
     }
 }
