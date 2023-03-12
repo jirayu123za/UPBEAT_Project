@@ -1,30 +1,28 @@
 package Project.parseEvaluator.nodes;
-import java.util.*;
+import Project.GameProcess.Game;
+import java.util.Map;
 
-public class AssignmentStatementNode implements Node{
-    protected VariableExpressionNode variableExpressionNode;
-    protected Node expressionNode;
+public class AssignmentStatementNode extends ExecuteNode{
+    protected String identifier;
+    protected ExpressionNode expressionNode;
 
-    public AssignmentStatementNode(VariableExpressionNode variableExpressionNode, Node expressionNode){
-        this.variableExpressionNode = variableExpressionNode;
+    public AssignmentStatementNode(String identifier, ExpressionNode expressionNode){
+        this.identifier = identifier;
         this.expressionNode = expressionNode;
     }
 
     @Override
-    public long evaluate(Map<String, Integer> bindings) {
-        variableExpressionNode.assignValue(expressionNode.evaluate(bindings));
-        return 0;
+    public boolean execute(Game bindings) {
+        Map<String, Long> store = bindings.identifiers();
+        store.put(identifier, expressionNode.evaluate(bindings));
+        return true;
     }
 
-    @Override
-    public void print(int height, Map<String, Integer> bindings) {
-        for(int i = 0 ; i < height; ++i){
-            System.out.print("   ");
+    public ExpressionNode execute(Map<String, Long> map){
+        if(!(expressionNode instanceof VariableExpressionNode)){
+            throw new RuntimeException(expressionNode.toString());
         }
-        System.out.print(" |---Assign ");
-        variableExpressionNode.print(0,bindings);
-        System.out.print(" = ");
-        expressionNode.print(0,bindings);
-        System.out.println();
+        map.put(identifier, ((VariableExpressionNode) expressionNode).evaluate());
+        return next;
     }
 }
