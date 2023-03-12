@@ -73,12 +73,6 @@ public class FactoryNode {
         return new OpponentNode();
     }
 
-    // create a new PlanNode
-    public PlanNode createPlanNode(){
-        return new PlanNode();
-    }
-
-
     // create a new relocate command
     public ExecuteNode createRelocateCommand(){
         return new RelocateCommand();
