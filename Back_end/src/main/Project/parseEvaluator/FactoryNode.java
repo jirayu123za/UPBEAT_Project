@@ -29,7 +29,7 @@ public class FactoryNode {
     }
 
     // create a new block statement Node
-    public ExecuteNode createBlockStatementNode(LinkedList<ExecuteNode> statements){
+    public ExecuteNode createBlockStatementNode(List<ExecuteNode> statements){
         return new BlockStatementNode(statements);
     }
 

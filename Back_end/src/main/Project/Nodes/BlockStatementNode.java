@@ -4,9 +4,9 @@ import Project.GameProcess.Game;
 import java.util.*;
 
 public class BlockStatementNode extends ExecuteNode {
-    public LinkedList<ExecuteNode> statements;
+    public List<ExecuteNode> statements;
 
-    public BlockStatementNode(LinkedList<ExecuteNode> statements){
+    public BlockStatementNode(List<ExecuteNode> statements){
         this.statements = statements;
     }
 
