@@ -38,11 +38,6 @@ public class FactoryNode {
         return new CollectCommand(expressionNode);
     }
 
-    // create a new if statement node
-    public ExecuteNode createConditionStatementNode(ExpressionNode expressionNode, ExecuteNode trueStatement, ExecuteNode falseStatement){
-        return new ConditionStatementNode(expressionNode, trueStatement, falseStatement);
-    }
-
     // create a new done command
     public ExecuteNode createDoneCommand(){
         return new DoneCommand();
