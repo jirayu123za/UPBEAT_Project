@@ -52,6 +52,8 @@ public class GrammarTokenizer implements Tokenizer{
             }else{
                 throw new IllegalArgumentException("BadCharacter :" + c);
             }
+            prev = next;
+            next = build.toString();
         }
     }
 
