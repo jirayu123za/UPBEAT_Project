@@ -3,9 +3,7 @@ import java.util.*;
 import java.io.*;
 
 public class ConstructionPlanCombiner {
-    // variable
 
-    // constructor
     public ConstructionPlanCombiner(){
     }
     // method to combine multiple files into a single string
