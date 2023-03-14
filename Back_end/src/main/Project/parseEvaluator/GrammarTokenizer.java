@@ -1,5 +1,4 @@
 package Project.parseEvaluator;
-import java.util.*;
 
 public class GrammarTokenizer implements Tokenizer{
     protected int current;
