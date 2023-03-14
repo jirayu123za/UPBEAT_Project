@@ -1,5 +1,3 @@
-t = t + 1
-m = 0
 while (deposit) {
 if (deposit - 100)
 then collect (deposit / 4)
@@ -12,7 +10,7 @@ then
 if (opponentLoc % 10 - 5) then move downleft
 else if (opponentLoc % 10 - 4) then move down
 else if (opponentLoc % 10 - 3) then move downright
-else if (opponentLoc % 10 - 2) then move right
+else if (opponentLoc % 10 - 2) then move downright
 else if (opponentLoc % 10 - 1) then move upright
 else move up
 else if (opponentLoc)
@@ -49,7 +47,6 @@ else if (dir - 2) then move down
 else if (dir - 1) then move downright
 else if (dir) then move upright
 else move up
-m = m + 1
 }
 }
 if (budget - 1) then invest 1 else {}
