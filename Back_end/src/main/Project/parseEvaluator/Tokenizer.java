@@ -1,5 +1,4 @@
 package Project.parseEvaluator;
-import java.util.*;
 
 public interface Tokenizer{
     boolean hasNextToken();
