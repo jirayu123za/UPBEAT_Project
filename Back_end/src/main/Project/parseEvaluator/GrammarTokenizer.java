@@ -81,7 +81,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public String peek(){
         if(next == null) {
-            throw new NoSuchElementException("prev is Empty: "+ prev);
+            throw new IllegalArgumentException("prev is Empty: "+ prev);
         }
         return next;
     }
