@@ -98,7 +98,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public String consume(){
         if(!hasNextToken()) {
-            throw new NoSuchElementException("prev is Empty: " + prev);
+            throw new IllegalArgumentException("prev is Empty: " + prev);
 
         }else{
             String result = next;
@@ -110,7 +110,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public boolean consume(String RegularExpression){
             if(!hasNextToken()){
-                throw new NoSuchElementException("prev is Empty: " + prev);
+                throw new IllegalArgumentException("prev is Empty: " + prev);
             }else{
                 if(next.equals(RegularExpression)){
                     computeNext();
