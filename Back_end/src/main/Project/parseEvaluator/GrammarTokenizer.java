@@ -20,21 +20,24 @@ public class GrammarTokenizer implements Tokenizer{
         }
 
         StringBuilder build = new StringBuilder();
-        while(current < constructionPlan.length() && skipCharacter(constructionPlan.charAt(current))){
-            if(constructionPlan.charAt(current) == '\n'){
+        // Skipping characters and comments
+        while(current < constructionPlan.length() && skipCharacter(constructionPlan.charAt(current))) {
+            if (constructionPlan.charAt(current) == '\n') {
                 line++;
             }
-            if(constructionPlan.charAt(current) == '#'){
+            if (constructionPlan.charAt(current) == '#') {
                 skipComment();
-            }else{
+            } else {
                 current++;
             }
-
+        }
+            // Process tokens
             if(current == constructionPlan.length()){
                 prev = next;
                 next = null;
                 return;
             }
+
             char c = constructionPlan.charAt(current);
             if(Character.isDigit(c)){
                 while(current < constructionPlan.length() && Character.isDigit(constructionPlan.charAt(current))){
@@ -55,7 +58,6 @@ public class GrammarTokenizer implements Tokenizer{
             prev = next;
             next = build.toString();
         }
-    }
 
     public void skipComment(){
         while(current < constructionPlan.length() && constructionPlan.charAt(current) != '\n'){
