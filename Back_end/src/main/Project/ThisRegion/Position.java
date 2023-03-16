@@ -1,5 +1,4 @@
 package Project.ThisRegion;
-
 import Project.Nodes.DirectionNode;
 
 public interface Position {
