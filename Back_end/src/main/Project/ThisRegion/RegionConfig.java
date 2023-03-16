@@ -57,4 +57,9 @@ public class RegionConfig implements Region{
         deposit = Math.max(0, amount + deposit);
         deposit = Math.min(max_Deposit, deposit);
     }
+
+    @Override
+    public String toString(){
+        return String.format("Owner : %s, location: %s", owner, location);
+    }
 }
