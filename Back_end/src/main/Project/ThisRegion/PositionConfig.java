@@ -30,4 +30,12 @@ public class PositionConfig implements Position{
     public String toString() {
         return String.format("x: %d, y: %d", x, y);
     }
+
+    @Override
+    public int hashCode(){
+        int result = 17;
+        result = 31 * result + Long.hashCode(x);
+        result = 31 * result + Long.hashCode(y);
+        return result;
+    }
 }
