@@ -1,6 +1,5 @@
 package Project.ThisRegion;
-
-import Project.ThisPlayer.Player;
+import Project.ThisPlayer.*;
 
 public interface Region {
     Player getOwner();
