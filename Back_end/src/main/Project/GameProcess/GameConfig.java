@@ -3,9 +3,13 @@ import Project.ThisPlayer.*;
 import Project.ThisRegion.*;
 import Project.ThisRegion.Region;
 import Project.ThisTurn.*;
-import Project.parseEvaluator.nodes.*;
-import java.util.*;
+import Project.Nodes.*;
+import Project.parseEvaluator.GrammarTokenizer;
+import Project.parseEvaluator.Parser;
+import Project.parseEvaluator.ProcessParse;
+
 import java.awt.geom.Point2D;
+import java.util.*;
 
 public class GameConfig implements Game {
     protected Configuration config;
@@ -59,8 +63,8 @@ public class GameConfig implements Game {
     public List<Region> getAdjacentRegions(Region region){
         List<Region> adjacentRegions = new ArrayList<>(6);
         Position curLoc = region.getLocation();
-        for(DirectionNode direction : DirectionNode.values){
-            Position newLoc = curLoc.direction(direction.toString());
+        for(DirectionNode direction : DirectionNode.values()){
+            Position newLoc = curLoc.direction(direction);
             if(!newLoc.Check_isValidPosition(config.rows(), config.cols())){
                 continue;
             }
@@ -86,9 +90,17 @@ public class GameConfig implements Game {
             throw new RuntimeException("Game is end");
         }
         turn.StartTurn();
-        // execute_plan
+        executeConstructionPlan(constructionPlan);
         win = winner();
         turn.endTurn();
+    }
+
+    public void executeConstructionPlan(String constructionPlan){
+        Parser parse = new ProcessParse(new GrammarTokenizer(constructionPlan));
+        List<ExecuteNode> plans = parse.parse();
+        for(ExecuteNode plan : plans){
+            plan.execute(this);
+        }
     }
 
     public Player winner(){
@@ -102,8 +114,7 @@ public class GameConfig implements Game {
 
     /*
     public long CalculateShortestPathStar(Position PStart, Position PEnd){
-        HashMap<Position, Position> cameFrom = new HashMap<>();
-        HashMap<Position, Double> score = new HashMap<>();
+
         return -1;
     }
      */
@@ -116,11 +127,10 @@ public class GameConfig implements Game {
     }
      */
 
-    /*
+
     public double getShortestPath(Position PStart, Position PEnd){
         return Point2D.distance(PStart.getPosX(), PEnd.getPosX(), PStart.getPosY(), PEnd.getPosY());
     }
-     */
 
     @Override
     public Map<String, Long> identifiers() {
@@ -136,8 +146,17 @@ public class GameConfig implements Game {
         bindings.put("currentCol", cityCrew.getLocation().getPosY());
         bindings.put("budget", currentPlayer.getBudget());
         bindings.put("deposit", cityCrew.getDeposit());
-        bindings.put("max_dep", config.max_dep());
+        bindings.put("maxDeposit", config.max_dep());
+        bindings.put("int", config.interest_pct(turn.getTurn(), cityCrew.getDeposit()));
+        bindings.put("random", new Random().nextLong(1000));
         return bindings;
+    }
+
+    public void moveCityCrew(Position position){
+        if(!position.Check_isValidPosition(config.rows(), config.cols())){
+            return;
+        }
+        cityCrew = regionOn(position);
     }
 
     @Override
@@ -149,7 +168,7 @@ public class GameConfig implements Game {
 
         // see position target
         Position cityCrewShowLocation = cityCrew.getLocation();
-        Position targetLocation = cityCrewShowLocation.direction(direction.toString());
+        Position targetLocation = cityCrewShowLocation.direction(direction);
 
         if(targetLocation.Check_isValidPosition(config.rows(), config.cols())){
             Region targetRegion = regionOn(targetLocation);
@@ -164,7 +183,6 @@ public class GameConfig implements Game {
                 targetRegion.updateOwner(null);
                 currentPlayer.updateBudget(-cost - totalValue);
             }
-
         }
         return true;
     }
@@ -188,7 +206,7 @@ public class GameConfig implements Game {
     }
 
     @Override
-    public boolean invest(long totalValue) {
+    public boolean invest(long totalValue)  {
         currentPlayer.updateBudget(-cost);
 
         // Check if the player has enough budget
@@ -233,6 +251,7 @@ public class GameConfig implements Game {
         // execute if player has enough budget
         if(currentPlayer.getBudget() >= cost && cityCrew.getOwner() == currentPlayer){
             currentPlayer.updateBudget(-cost);
+            cityCrew.setCityCenter(currentPlayer);
             cityCenterOfRegion.get(currentPlayer).changeCityCenter();
         }
         return false;
@@ -274,7 +293,7 @@ public class GameConfig implements Game {
                Player owner = territory.get((int) index).getOwner();
                if(owner != null && owner != currentPlayer){
                    // need modify
-                   return 0;
+                   return i + 1L + distance * 10L;
                }
                path[i] = path[i].direction(DirectionNode.values()[i]);
            }
@@ -307,7 +326,7 @@ public class GameConfig implements Game {
 
             if(region.getOwner() != null && region.getOwner() != currentPlayer){
                 // need modify
-                return 0;
+                return ((distance + 1L) * 100 + (long) (Math.log10(region.getDeposit() + 1)) + 1);
             }
             distance++;
             newLoc = newLoc.direction(direction);
@@ -319,5 +338,4 @@ public class GameConfig implements Game {
     public long budget() {
         return currentPlayer.getBudget();
     }
-
 }
