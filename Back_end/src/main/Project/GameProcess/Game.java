@@ -1,7 +1,7 @@
 package Project.GameProcess;
 import Project.ThisPlayer.*;
 import Project.ThisRegion.*;
-import Project.parseEvaluator.nodes.*;
+import Project.Nodes.*;
 import java.util.*;
 
 public interface Game {
