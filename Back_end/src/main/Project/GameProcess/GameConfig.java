@@ -1,13 +1,9 @@
 package Project.GameProcess;
 import Project.ThisPlayer.*;
 import Project.ThisRegion.*;
-import Project.ThisRegion.Region;
 import Project.ThisTurn.*;
 import Project.Nodes.*;
-import Project.parseEvaluator.GrammarTokenizer;
-import Project.parseEvaluator.Parser;
-import Project.parseEvaluator.ProcessParse;
-
+import Project.parseEvaluator.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 
@@ -112,23 +108,64 @@ public class GameConfig implements Game {
         return null;
     }
 
-    /*
-    public long CalculateShortestPathStar(Position PStart, Position PEnd){
+    //
+    public record FinalPosition(Position position, Position finalPos) implements Comparable<FinalPosition>{
+        @Override
+        public int compareTo(FinalPosition o) {
+            return (int) (getShortestPath(position, finalPos) -  getShortestPath(o.position, finalPos));
+        }
+    }
 
+    //
+    public long CalculateShortestPathStar(Position PStart, Position PEnd){
+        PriorityQueue<FinalPosition> openSet = new PriorityQueue<>();
+        HashMap<Position, Position> cameFrom = new HashMap<>();
+        HashMap<Position, Double> gScore = new HashMap<>();
+        openSet.add(new FinalPosition(PStart, PEnd));
+        gScore.put(PStart, 0.0);
+
+        while(!openSet.isEmpty()){
+            Position cur = openSet.remove().position();
+            if(cur.equals(PEnd)){
+                return getShortestPathStar(cameFrom, cur);
+            }
+
+            for(DirectionNode direction : DirectionNode.values()){
+                Position neighbor = cur.direction(direction);
+                if(!neighbor.Check_isValidPosition(config.rows(), config.cols()) || neighbor.equals(PStart)){
+                    continue;
+                }
+
+                double tentativeGScore = gScore.get(cur) + getShortestPath(cur, neighbor);
+                gScore.putIfAbsent(neighbor, Double.POSITIVE_INFINITY);
+
+                if(tentativeGScore >= gScore.get(neighbor)){
+                    continue;
+                }
+                cameFrom.put(neighbor, cur);
+                gScore.put(neighbor, tentativeGScore);
+                FinalPosition position = new FinalPosition(neighbor, PEnd);
+
+                if(!openSet.contains(position)){
+                    openSet.add(position);
+                }
+            }
+        }
         return -1;
     }
-     */
 
-    /*
     public long getShortestPathStar(HashMap<Position, Position> cameFrom, Position cur){
         long distance = 0;
-        // processing.....
+        cur = cameFrom.get(cur);
+
+        while (cur != null) {
+            distance++;
+            cur = cameFrom.get(cur);
+        }
         return distance;
     }
-     */
 
-
-    public double getShortestPath(Position PStart, Position PEnd){
+    public static double getShortestPath(Position PStart, Position PEnd){
         return Point2D.distance(PStart.getPosX(), PEnd.getPosX(), PStart.getPosY(), PEnd.getPosY());
     }
 
@@ -245,8 +282,8 @@ public class GameConfig implements Game {
 
         Position curCityCrewLoc = cityCrew.getLocation();
         Position curCityCenter = cityCenterOfRegion.get(currentPlayer).getLocation();
-        //long path = getShortestPathStar(curCityCrewLoc, curCityCenter);
-        //long cost = 5 * path + 10;
+        long path = CalculateShortestPathStar(curCityCrewLoc, curCityCenter);
+        long cost = 5 * path + 10;
 
         // execute if player has enough budget
         if(currentPlayer.getBudget() >= cost && cityCrew.getOwner() == currentPlayer){
