@@ -3,7 +3,7 @@ package Project.ThisPlayer;
 import java.util.Map;
 
 public interface Player {
-    int getID();
+    long getID();
     String getName();
     long getBudget();
     boolean updateBudget(long amount);

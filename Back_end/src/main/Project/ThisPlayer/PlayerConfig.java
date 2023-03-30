@@ -1,22 +1,22 @@
 package Project.ThisPlayer;
-
-import java.util.Map;
+import java.util.*;
 
 public class PlayerConfig implements Player{
     // Variable
-    protected int id;
+    protected long id;
     protected String name;
     protected long budget;
     protected Map<String, Long> identifier;
 
-    public PlayerConfig(int id, String name, long budget){
+    public PlayerConfig(long id, String name, long budget){
         this.id = id;
         this.name = name;
         this.budget = budget;
+        this.identifier = new HashMap<>();
     }
 
     @Override
-    public int getID() {
+    public long getID() {
         return id;
     }
 
