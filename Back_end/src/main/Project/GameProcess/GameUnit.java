@@ -1,9 +1,13 @@
 package Project.GameProcess;
 import Project.Nodes.*;
+import Project.ThisPlayer.*;
+import Project.ThisRegion.*;
 import Project.parseEvaluator.*;
 import java.util.*;
 
 public class GameUnit {
+    protected int id = 1;
+
     public Map<String, Long> evaluate(List<ExecuteNode> lists) {
         Map<String, Long> bindings = new HashMap<>();
         for(ExecuteNode list : lists){
@@ -27,8 +31,6 @@ public class GameUnit {
             return defaultValue;
         }
     }
-
-
 
     public Configuration loadConfiguration(String config){
         Parser parser = new ConfigurationParse(new GrammarTokenizer(config));
@@ -111,8 +113,52 @@ public class GameUnit {
                 """);
     }
 
+    public Region setIdleRegion(List<Region> territory){
+        Random rand = new Random();
+        Region region;
+        do{
+            int indexOfRegion = rand.nextInt(territory.size());
+            region = territory.get(indexOfRegion);
+        }while(region.getOwner() != null);
+        return region;
+    }
+
     // create new territory from given configuration
+    public List<Region> createTerritory(Configuration config){
+        List<Region> territory = new ArrayList<>((int) (config.rows() * config.cols()));
+
+        for(int r = 0; r < config.rows(); r++){
+            for(int c = 0; c < config.cols(); c++){
+                territory.add(new RegionConfig(Position.of(c, r), config.max_dep()));
+            }
+        }
+        return territory;
+    }
+
     // create new a player
+    public Player createPlayer(Configuration config, String name, List<Region> territory){
+        Region region = setIdleRegion(territory);
+        Player player = new PlayerConfig(id++, name, config.init_budget());
+        region.setCityCenter(player);
+        region.updateDeposit(config.init_budget());
+        return player;
+    }
+
     // create new game instance
+    public Game createGame(String nameP1, String nameP2){
+        Configuration config = defaultConfig();
+        List<Region> territory = createTerritory(config);
+        Player P1 = createPlayer(config, nameP1, territory);
+        Player P2 = createPlayer(config, nameP2, territory);
+        return new GameConfig(P1, P2, config, territory);
+    }
+
     // create new game with specific configuration
+    public Game createCustom(String configuration, String nameP1, String nameP2){
+        Configuration config = loadConfiguration(configuration);
+        List<Region> territory = createTerritory(config);
+        Player P1 = createPlayer(config, nameP1, territory);
+        Player P2 = createPlayer(config, nameP2, territory);
+        return new GameConfig(P1, P2, config, territory);
+    }
 }
