@@ -52,7 +52,7 @@ public class GrammarTokenizer implements Tokenizer{
                 build.append(constructionPlan.charAt(current));
                 current++;
             }else{
-                throw new IllegalArgumentException("BadCharacter :" + c);
+                throw new GrammarException.BadChar(c);
             }
             prev = next;
             next = build.toString();
@@ -80,7 +80,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public String peek(){
         if(next == null) {
-            throw new IllegalArgumentException("prev is Empty: "+ prev);
+            throw new GrammarException.idleToken("prev is Empty: "+ prev);
         }
         return next;
     }
@@ -97,7 +97,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public String consume(){
         if(!hasNextToken()) {
-            throw new IllegalArgumentException("prev is Empty: " + prev);
+            throw new GrammarException.idleToken("prev is Empty: " + prev);
 
         }else{
             String result = next;
@@ -109,7 +109,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public boolean consume(String RegularExpression){
             if(!hasNextToken()){
-                throw new IllegalArgumentException("prev is Empty: " + prev);
+                throw new GrammarException.idleToken("prev is Empty: " + prev);
             }else{
                 if(next.equals(RegularExpression)){
                     computeNext();
