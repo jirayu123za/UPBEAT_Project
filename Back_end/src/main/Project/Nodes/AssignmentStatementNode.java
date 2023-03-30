@@ -20,7 +20,7 @@ public class AssignmentStatementNode extends ExecuteNode{
 
     public ExpressionNode execute(Map<String, Long> map){
         if(!(expressionNode instanceof VariableExpressionNode)){
-            throw new RuntimeException(expressionNode.toString());
+            throw new NodeException.IntegerRequire(expressionNode.toString());
         }
         map.put(identifier, ((VariableExpressionNode) expressionNode).evaluate());
         return next;

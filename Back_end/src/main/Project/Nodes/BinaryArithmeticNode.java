@@ -36,7 +36,7 @@ public class BinaryArithmeticNode extends ExpressionNode{
         if(op.equals("^")){
                 return (long) Math.pow(LeftValue, RightValue);
         }
-        throw new ArithmeticException("Unknown op: " + op);
+        throw new NodeException.UnknownOp("Unknown op: " + op);
     }
 
     @Override
