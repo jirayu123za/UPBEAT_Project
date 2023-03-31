@@ -1,4 +1,4 @@
-package Project.parseEvaluator;
+package Project.Tokenizer;
 
 public interface Tokenizer{
     boolean hasNextToken();

@@ -1,4 +1,6 @@
-package Project.parseEvaluator;
+package Project.Tokenizer;
+import Project.Tokenizer.GrammarException;
+import Project.Tokenizer.GrammarTokenizer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -40,10 +42,10 @@ public class TestGrammarTokenizer {
         Assertions.assertEquals("move",test.peek());
 
         test = new GrammarTokenizer(null);
-        Assertions.assertThrows(IllegalArgumentException.class, test::peek);
+        Assertions.assertThrows(GrammarException.idleToken.class, test::peek);
 
         test = new GrammarTokenizer("");
-        Assertions.assertThrows(IllegalArgumentException.class, test::peek);
+        Assertions.assertThrows(GrammarException.idleToken.class, test::peek);
     }
 
     @Test
@@ -52,10 +54,10 @@ public class TestGrammarTokenizer {
         Assertions.assertEquals("move", test.consume());
 
         test = new GrammarTokenizer(null);
-        Assertions.assertThrows(IllegalArgumentException.class, test::consume);
+        Assertions.assertThrows(GrammarException.idleToken.class, test::consume);
 
         test = new GrammarTokenizer("");
-        Assertions.assertThrows(IllegalArgumentException.class, test::consume);
+        Assertions.assertThrows(GrammarException.idleToken.class, test::consume);
     }
 
     @Test
@@ -64,17 +66,17 @@ public class TestGrammarTokenizer {
         Assertions.assertFalse(test.consume("m"));
         Assertions.assertDoesNotThrow(()-> test.consume("m"));
         Assertions.assertTrue(test.consume("move"));
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume("move"));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume("move"));
 
         test = new GrammarTokenizer(null);
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume(""));
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume("m"));
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume("move"));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume(""));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume("m"));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume("move"));
 
         test = new GrammarTokenizer("");
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume(""));
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume("m"));
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> test.consume("move"));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume(""));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume("m"));
+        Assertions.assertThrows(GrammarException.idleToken.class, ()-> test.consume("move"));
     }
 
     @Test

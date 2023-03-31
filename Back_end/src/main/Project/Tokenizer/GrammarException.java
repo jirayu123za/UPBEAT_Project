@@ -1,4 +1,4 @@
-package Project.parseEvaluator;
+package Project.Tokenizer;
 
 public class GrammarException extends RuntimeException{
     public GrammarException(String msg){

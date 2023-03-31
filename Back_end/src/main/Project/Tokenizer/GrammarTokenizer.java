@@ -1,6 +1,6 @@
-package Project.parseEvaluator;
+package Project.Tokenizer;
 
-public class GrammarTokenizer implements Tokenizer{
+public class GrammarTokenizer implements Tokenizer {
     protected int current;
     protected int line;
     protected String constructionPlan;
@@ -80,7 +80,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public String peek(){
         if(next == null) {
-            throw new GrammarException.idleToken("prev is Empty: "+ prev);
+            throw new GrammarException.idleToken(prev);
         }
         return next;
     }
@@ -97,8 +97,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public String consume(){
         if(!hasNextToken()) {
-            throw new GrammarException.idleToken("prev is Empty: " + prev);
-
+            throw new GrammarException.idleToken(prev);
         }else{
             String result = next;
             computeNext();
@@ -109,7 +108,7 @@ public class GrammarTokenizer implements Tokenizer{
     @Override
     public boolean consume(String RegularExpression){
             if(!hasNextToken()){
-                throw new GrammarException.idleToken("prev is Empty: " + prev);
+                throw new GrammarException.idleToken(prev);
             }else{
                 if(next.equals(RegularExpression)){
                     computeNext();
