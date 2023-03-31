@@ -1,7 +1,8 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
-public class OpponentNode extends ExpressionNode{
+public class OpponentNode extends ExpressionNode {
     public OpponentNode(){
 
     }

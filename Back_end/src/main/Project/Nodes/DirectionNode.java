@@ -1,6 +1,6 @@
 package Project.Nodes;
 
-public enum DirectionNode implements Node{
+public enum DirectionNode{
     up,
     upright,
     upleft,

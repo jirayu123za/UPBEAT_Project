@@ -1,7 +1,8 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
-public class ConditionStatementNode extends ExecuteNode{
+public abstract class ConditionStatementNode extends ExecuteNode{
     protected ExpressionNode conditionNode;
     protected ExecuteNode trueStatement;
     protected ExecuteNode falseStatement;

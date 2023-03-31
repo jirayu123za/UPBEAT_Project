@@ -1,8 +1,9 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
 import java.util.Map;
+import Project.Nodes.Node.*;
 
-public class AssignmentStatementNode extends ExecuteNode{
+public class AssignmentStatementNode extends ExecuteNode {
     protected String identifier;
     protected ExpressionNode expressionNode;
 
@@ -18,7 +19,7 @@ public class AssignmentStatementNode extends ExecuteNode{
         return true;
     }
 
-    public ExpressionNode execute(Map<String, Long> map){
+    public ExecuteNode execute(Map<String, Long> map){
         if(!(expressionNode instanceof VariableExpressionNode)){
             throw new NodeException.IntegerRequire(expressionNode.toString());
         }

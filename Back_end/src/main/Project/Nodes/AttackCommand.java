@@ -1,7 +1,8 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
-public class AttackCommand extends CommandNode{
+public class AttackCommand extends ExecuteNode {
     protected ExpressionNode expressionNode;
     protected DirectionNode direction;
 

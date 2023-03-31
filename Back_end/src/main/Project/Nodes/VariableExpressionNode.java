@@ -1,7 +1,8 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
-public class VariableExpressionNode extends ExpressionNode{
+public class VariableExpressionNode extends ExpressionNode {
     protected long variable;
     protected String identifier;
 
@@ -25,7 +26,7 @@ public class VariableExpressionNode extends ExpressionNode{
             }
             Long variable = bindings.identifiers().get(identifier);
             if(variable == null){
-                throw new RuntimeException(identifier);
+                throw new NodeException.UndefinedIdentifier(identifier);
             }
             return variable;
         }
@@ -35,7 +36,8 @@ public class VariableExpressionNode extends ExpressionNode{
         if(identifier == null){
             return variable;
         }else{
-            throw new RuntimeException(identifier);
+            throw new NodeException.IntegerRequire(identifier) {
+            };
         }
     }
 

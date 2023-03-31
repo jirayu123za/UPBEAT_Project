@@ -1,5 +1,4 @@
 package Project.Nodes;
-
 import Project.GameProcess.Game;
 
 public class WhileStatementNode extends ConditionStatementNode{

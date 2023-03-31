@@ -1,10 +1,11 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
 import java.util.*;
 
 public class BlockStatementNode extends ExecuteNode {
-    public List<ExecuteNode> statements;
+    protected List<ExecuteNode> statements;
 
     public BlockStatementNode(List<ExecuteNode> statements){
         this.statements = statements;

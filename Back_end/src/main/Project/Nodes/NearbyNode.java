@@ -1,5 +1,6 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
 public class NearbyNode extends ExpressionNode{
     protected DirectionNode direction;

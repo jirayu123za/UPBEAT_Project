@@ -1,5 +1,6 @@
 package Project.Nodes;
 import Project.GameProcess.Game;
+import Project.Nodes.Node.*;
 
 public class BinaryArithmeticNode extends ExpressionNode{
     protected ExpressionNode left, right;
@@ -11,32 +12,19 @@ public class BinaryArithmeticNode extends ExpressionNode{
         this.right = right;
     }
 
-    public long evaluate(Game bindings) throws ArithmeticException {
+    public long evaluate(Game bindings){
         long LeftValue = left.evaluate(bindings);
         long RightValue = right.evaluate(bindings);
 
-        if(op.equals("+"))
-            return LeftValue + RightValue;
-        if(op.equals("-"))
-            return LeftValue - RightValue;
-        if(op.equals("*"))
-            return LeftValue * RightValue;
-        if(op.equals("/")){
-            if (RightValue == 0){
-                throw new ArithmeticException("Divide by zero");
-            }
-                return (long) Math.floor(LeftValue / RightValue);
-            }
-        if(op.equals("%")){
-            if(RightValue == 0){
-                throw new ArithmeticException("Modulo by zero");
-            }
-                return LeftValue % RightValue;
-            }
-        if(op.equals("^")){
-                return (long) Math.pow(LeftValue, RightValue);
-        }
-        throw new NodeException.UnknownOp("Unknown op: " + op);
+        return switch (op) {
+            case "+" -> LeftValue + RightValue;
+            case "-" -> LeftValue - RightValue;
+            case "*" -> LeftValue * RightValue;
+            case "/" -> LeftValue / RightValue;
+            case "%" -> LeftValue % RightValue;
+            case "^" -> (long) Math.pow(LeftValue, RightValue);
+            default -> throw new NodeException.UnknownOp(op);
+        };
     }
 
     @Override
