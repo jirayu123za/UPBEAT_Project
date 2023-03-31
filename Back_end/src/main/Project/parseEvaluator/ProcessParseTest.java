@@ -1,6 +1,7 @@
 package Project.parseEvaluator;
 import Project.FileHelpRead;
-import Project.Nodes.*;
+import Project.Nodes.Node.*;
+import Project.Tokenizer.GrammarTokenizer;
 import org.junit.jupiter.api.*;
 import java.io.*;
 import java.util.*;
@@ -105,6 +106,7 @@ public class ProcessParseTest {
         GrammarTokenizer tokenizer = new GrammarTokenizer(plan);
         ProcessParse parse = new ProcessParse(tokenizer);
         Assertions.assertDoesNotThrow(parse::parse);
+        System.out.println(parse);
     }
 
     @Test
