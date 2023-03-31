@@ -33,9 +33,7 @@ public class PositionConfig implements Position{
 
     @Override
     public int hashCode(){
-        int result = 17;
-        result = 31 * result + Long.hashCode(x);
-        result = 31 * result + Long.hashCode(y);
-        return result;
+        long result = (y + (x + 1) / 2);
+        return  (int) (x + (result * result));
     }
 }
