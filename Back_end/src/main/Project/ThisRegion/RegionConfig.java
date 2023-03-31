@@ -5,12 +5,12 @@ public class RegionConfig implements Region{
     protected Player owner;
     protected Position location;
     protected boolean isCityCenter;
-    protected long max_Deposit;
+    protected long maxDeposit;
     protected long deposit;
 
     public RegionConfig(Position location, long max_Deposit){
         this.location = location;
-        this.max_Deposit = max_Deposit;
+        this.maxDeposit = max_Deposit;
         this.owner = null;
         this.isCityCenter = false;
         this.deposit = 0;
@@ -55,7 +55,7 @@ public class RegionConfig implements Region{
     @Override
     public void updateDeposit(long amount) {
         deposit = Math.max(0, amount + deposit);
-        deposit = Math.min(max_Deposit, deposit);
+        deposit = Math.min(maxDeposit, deposit);
     }
 
     @Override
