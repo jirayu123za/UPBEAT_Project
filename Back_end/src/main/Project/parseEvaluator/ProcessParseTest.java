@@ -6,6 +6,8 @@ import org.junit.jupiter.api.*;
 import java.io.*;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class ProcessParseTest {
     protected ProcessParse parser;
 
@@ -46,7 +48,6 @@ public class ProcessParseTest {
 
     @Test
     public void testParseMultiStatement(){
-        // try to correct
         String plan = """
                 while (deposit) { # still our region
                   if (deposit - 100)
@@ -103,18 +104,15 @@ public class ProcessParseTest {
                 if (budget - 1) then invest 1 else {}
                 """
         ;
-        GrammarTokenizer tokenizer = new GrammarTokenizer(plan);
-        ProcessParse parse = new ProcessParse(tokenizer);
-        Assertions.assertDoesNotThrow(parse::parse);
-        System.out.println(parse);
+        parser = new ProcessParse(new GrammarTokenizer(plan));
+        Assertions.assertDoesNotThrow(parser::parse);
+        System.out.println(parser);
     }
 
     @Test
     public void testParseEmptyStatement() {
-        parser = new ProcessParse(new GrammarTokenizer(null));
-        Assertions.assertThrows(SyntaxError.StateRequire.class, parser::parse);
-        parser = new ProcessParse(new GrammarTokenizer(""));
-        Assertions.assertThrows(SyntaxError.StateRequire.class, parser::parse);
+        assertThrows(SyntaxError.StateRequire.class, () -> new ProcessParse(new GrammarTokenizer(null)));
+        assertThrows(SyntaxError.StateRequire.class, () -> new ProcessParse(new GrammarTokenizer("")));
     }
 
     @Test

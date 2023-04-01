@@ -5,7 +5,15 @@ import Project.Tokenizer.Tokenizer;
 import java.util.*;
 
 public class ProcessParse implements Parser{
-    protected Tokenizer tkz;
+    protected final Tokenizer tkz;
+    // List string of commands
+    private final List<String> commands = Arrays.stream(
+            new String[]{"done", "relocate", "move", "invest", "collect", "shoot"}
+    ).toList();
+    // List string of reserved
+    private final List<String> reserved = Arrays.stream(
+            new String[]{"collect", "done", "down", "downleft", "downright", "else", "if", "invest", "move", "nearby", "opponent", "relocate", "shoot", "then", "up", "upleft", "upright", "while"}
+    ).toList();
 
     public ProcessParse(Tokenizer tkz) {
         if(!tkz.hasNextToken()){
@@ -82,7 +90,7 @@ public class ProcessParse implements Parser{
 
 
     private ExecuteNode parseCommand(){
-        if(RegularExpression.ACTION_REGEX.contains(tkz.peek())){
+        if(commands.contains(tkz.peek())){
             return parseActionCommand();
         }else{
             return parseAssignmentStatement();
@@ -104,7 +112,7 @@ public class ProcessParse implements Parser{
 
     private String parseIdentifier(){
         String identifier = tkz.consume();
-        if(RegularExpression.RESERVEDWORD_REGEX.contains(identifier)){
+        if(reserved.contains(identifier)){
             throw new SyntaxError.ReservedWord(identifier, tkz.getNewline());
         }
         return identifier;
@@ -181,7 +189,7 @@ public class ProcessParse implements Parser{
     private ExpressionNode parseExpression(){
         ExpressionNode left = parseTerm();
 
-        while(tkz.peek() != null && tkz.peek("+") || tkz.peek("-")) {
+        while(tkz.peek("+") || tkz.peek("-")) {
             String op = tkz.consume();
             ExpressionNode right = parseTerm();
             left = new BinaryArithmeticNode(left, op, right);
@@ -193,7 +201,7 @@ public class ProcessParse implements Parser{
     private ExpressionNode parseTerm(){
         ExpressionNode left = parseFactory();
 
-        while(tkz.peek() != null && tkz.peek().equals("*") || tkz.peek().equals("/") || tkz.peek().equals("%")){
+        while(tkz.peek("*") || tkz.peek("/") || tkz.peek("%")){
             String op = tkz.consume();
             ExpressionNode right = parseFactory();
             left = new BinaryArithmeticNode(left, op, right);
@@ -205,7 +213,7 @@ public class ProcessParse implements Parser{
     private ExpressionNode parseFactory(){
         ExpressionNode left = parsePower();
 
-        if(tkz.peek().equals("^")){
+        if(tkz.peek("^")){
             String op = tkz.consume();
             ExpressionNode right = parseFactory();
             left = new BinaryArithmeticNode(left, op, right);

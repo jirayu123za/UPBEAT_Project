@@ -5,12 +5,15 @@ import Project.Nodes.*;
 import java.util.*;
 
 public interface Game {
+    List<Region> getTerritory();
+
+    void getConstructionPlan(String constructionPlan);
+
     Player getPlayer1();
     Player getPlayer2();
     Player getCurrentPlayer();
     Player getWin();
 
-    List<Region> getTerritory();
     Region regionOn(Position position);
     Region cityCrewRegion();
 
@@ -26,6 +29,5 @@ public interface Game {
     long opponent();
     long nearby(DirectionNode direction);
     long budget();
-
-    void getConstructionPlan(String constructionPlan);
+    long getTurn();
 }

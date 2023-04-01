@@ -1,10 +1,10 @@
 package Project.Tokenizer;
 
 public class GrammarTokenizer implements Tokenizer {
-    protected int current;
-    protected int line;
-    protected String constructionPlan;
-    protected String next, prev;
+    private int current;
+    private int line;
+    private final String constructionPlan;
+    private String next, prev;
 
     public GrammarTokenizer(String constructionPlan){
         this.constructionPlan = constructionPlan;
@@ -13,62 +13,55 @@ public class GrammarTokenizer implements Tokenizer {
         computeNext();
     }
 
-    public void computeNext(){
-        if(constructionPlan == null){
+    private void computeNext(){
+        if (constructionPlan == null) return;
+        StringBuilder sb = new StringBuilder();
+        while (current < constructionPlan.length() && skipCharacter(constructionPlan.charAt(current))) {
+            if (constructionPlan.charAt(current) == '\n')
+                line++;
+            if (constructionPlan.charAt(current) == '#')
+                skipComment();
+            else
+                current++;
+        }
+
+        if (current == constructionPlan.length()) {
+            prev = next;
+            next = null;
             return;
         }
-
-        StringBuilder build = new StringBuilder();
-        // Skipping characters and comments
-        while(current < constructionPlan.length() && skipCharacter(constructionPlan.charAt(current))) {
-            if (constructionPlan.charAt(current) == '\n') {
-                line++;
-            }
-            if (constructionPlan.charAt(current) == '#') {
-                skipComment();
-            } else {
+        char c = constructionPlan.charAt(current);
+        if (Character.isDigit(c)) {
+            while (current < constructionPlan.length() && Character.isDigit(constructionPlan.charAt(current))) {
+                sb.append(constructionPlan.charAt(current));
                 current++;
             }
-        }
-            // Process tokens
-            if(current == constructionPlan.length()){
-                prev = next;
-                next = null;
-                return;
-            }
-
-            char c = constructionPlan.charAt(current);
-            if(Character.isDigit(c)){
-                while(current < constructionPlan.length() && Character.isDigit(constructionPlan.charAt(current))){
-                    build.append(constructionPlan.charAt(current));
-                    current++;
-                }
-            }else if(skipLetter(c) || c == '_'){
-                while(current < constructionPlan.length() && skipLetter(constructionPlan.charAt(current))) {
-                    build.append(constructionPlan.charAt(current));
-                    current++;
-                }
-            }else if("()+-*/%^{}=".contains(String.valueOf(c))){
-                build.append(constructionPlan.charAt(current));
+        } else if (skipLetter(c) || c == '_') {
+            while (current < constructionPlan.length() && skipLetter(constructionPlan.charAt(current))) {
+                sb.append(constructionPlan.charAt(current));
                 current++;
-            }else{
-                throw new GrammarException.BadChar(c);
             }
-            prev = next;
-            next = build.toString();
+        } else if ("()+-*/%^{}=".contains(String.valueOf(c))) {
+            sb.append(constructionPlan.charAt(current));
+            current++;
+        } else {
+            throw new GrammarException.BadChar(c);
+        }
+        prev = next;
+        next = sb.toString();
         }
 
-    public void skipComment(){
+    private void skipComment(){
         while(current < constructionPlan.length() && constructionPlan.charAt(current) != '\n'){
             current++;
         }
     }
 
-    public boolean skipCharacter(char c){
+    private boolean skipCharacter(char c){
         return Character.isWhitespace(c) || c == '#' || c == '"';
     }
 
-    public boolean skipLetter(char c){
+    private boolean skipLetter(char c){
         return Character.isLetter(c) || c == '_';
     }
 

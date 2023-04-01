@@ -1,8 +1,5 @@
 package Project.Tokenizer;
-import Project.Tokenizer.GrammarException;
-import Project.Tokenizer.GrammarTokenizer;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class TestGrammarTokenizer {
     protected GrammarTokenizer test;
