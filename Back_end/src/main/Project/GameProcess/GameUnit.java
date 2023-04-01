@@ -1,25 +1,28 @@
 package Project.GameProcess;
 import Project.Nodes.*;
+import Project.Nodes.Node.*;
 import Project.ThisPlayer.*;
 import Project.ThisRegion.*;
+import Project.Tokenizer.GrammarTokenizer;
+import Project.Tokenizer.Tokenizer;
 import Project.parseEvaluator.*;
 import java.util.*;
 
-public class GameUnit {
-    protected int id = 1;
+public final class GameUnit {
+    private static int id = 1;
 
-    public Map<String, Long> evaluate(List<ExecuteNode> lists) {
+    private static Map<String, Long> evaluate(List<ExecuteNode> lists) {
         Map<String, Long> bindings = new HashMap<>();
         for(ExecuteNode list : lists){
             if(!(list instanceof AssignmentStatementNode)){
-                throw new IllegalArgumentException("Invalid config");
+                throw new GameException.InvalidConfiguration();
             }
             ((AssignmentStatementNode) list).execute(bindings);
         }
         return bindings;
     }
 
-    public static class ConfigurationParse extends ProcessParse{
+    private static class ConfigurationParse extends ProcessParse{
         public ConfigurationParse(Tokenizer tkz) {
             super(tkz);
         }
@@ -32,19 +35,19 @@ public class GameUnit {
         }
     }
 
-    public Configuration loadConfiguration(String config){
+    public static Configuration loadConfiguration(String config){
         Parser parser = new ConfigurationParse(new GrammarTokenizer(config));
         List<ExecuteNode> lists = parser.parse();
         Map<String, Long> bindings = evaluate(lists);
         Configuration configuration = new Configuration() {
             @Override
             public long rows() {
-                return bindings.getOrDefault("m", 50L);
+                return bindings.getOrDefault("rows", 50L);
             }
 
             @Override
             public long cols() {
-                return bindings.getOrDefault("n", 50L);
+                return bindings.getOrDefault("cols", 50L);
             }
 
             @Override
@@ -88,24 +91,24 @@ public class GameUnit {
             }
 
             @Override
-            public long interest_pct(long turn, long deposit) {
+            public double interest_pct(long turn, long deposit) {
                 return (long) (bindings.getOrDefault("interest_pct", 0L) * Math.log10(deposit) * Math.log(turn));
             }
         };
-        if(configuration.init_plan_sec() >= 60) throw new IllegalArgumentException("Invalid config");
-        if(configuration.plan_rev_sec() >= 60) throw new IllegalArgumentException("Invalid config");
+        if(configuration.init_plan_sec() >= 60) throw new GameException.InvalidConfiguration();
+        if(configuration.plan_rev_sec() >= 60) throw new GameException.InvalidConfiguration();
         return configuration;
     }
 
-    public Configuration defaultConfig(){
+    public static Configuration defaultConfig(){
         return loadConfiguration("""
-                m=4
-                n=4
+                rows=10
+                cols=10
                 init_plan_min=5
                 init_plan_sec=0
                 init_budget=10000
                 init_center_dep=100
-                plan_rev_min=50
+                plan_rev_min=30
                 plan_rev_sec=0
                 rev_cost=100
                 max_dep=1000000
@@ -113,7 +116,7 @@ public class GameUnit {
                 """);
     }
 
-    public Region setIdleRegion(List<Region> territory){
+    public static Region setIdleRegion(List<Region> territory){
         Random rand = new Random();
         Region region;
         do{
@@ -124,7 +127,7 @@ public class GameUnit {
     }
 
     // create new territory from given configuration
-    public List<Region> createTerritory(Configuration config){
+    public static List<Region> createTerritory(Configuration config){
         List<Region> territory = new ArrayList<>((int) (config.rows() * config.cols()));
 
         for(int r = 0; r < config.rows(); r++){
@@ -136,16 +139,16 @@ public class GameUnit {
     }
 
     // create new a player
-    public Player createPlayer(Configuration config, String name, List<Region> territory){
+    public static Player createPlayer(Configuration config, String name, List<Region> territory){
         Region region = setIdleRegion(territory);
-        Player player = new PlayerConfig(id++, name, config.init_budget());
+        Player player = new PlayerConfig(id++, name, config.init_center_dep());
         region.setCityCenter(player);
         region.updateDeposit(config.init_budget());
         return player;
     }
 
     // create new game instance
-    public Game createGame(String nameP1, String nameP2){
+    public static Game createGame(String nameP1, String nameP2){
         Configuration config = defaultConfig();
         List<Region> territory = createTerritory(config);
         Player P1 = createPlayer(config, nameP1, territory);
@@ -154,7 +157,7 @@ public class GameUnit {
     }
 
     // create new game with specific configuration
-    public Game createCustom(String configuration, String nameP1, String nameP2){
+    public static Game createCustom(String configuration, String nameP1, String nameP2){
         Configuration config = loadConfiguration(configuration);
         List<Region> territory = createTerritory(config);
         Player P1 = createPlayer(config, nameP1, territory);
