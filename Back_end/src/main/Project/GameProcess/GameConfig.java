@@ -1,23 +1,25 @@
 package Project.GameProcess;
 import Project.ThisPlayer.*;
 import Project.ThisRegion.*;
-import Project.ThisTurn.*;
 import Project.Nodes.*;
+import Project.Nodes.Node.*;
+import Project.Tokenizer.*;
 import Project.parseEvaluator.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 
-public class GameConfig implements Game {
-    protected Configuration config;
-    protected List<Region> territory;
-    protected int cost = 1;
-    protected Player player1;
-    protected Player player2;
+public class GameConfig implements Game{
+    protected final Player player1,player2;
+    protected final Configuration config;
+    protected final List<Region> territory;
+
     protected Player currentPlayer;
     protected Player win;
     protected Region cityCrew;
-    protected Turn turn;
-    protected Map<Player, Region> cityCenterOfRegion;
+
+    protected long turn;
+    protected final int cost = 1;
+    protected final Map<Player, Region> cityCenterOfRegion;
 
     public GameConfig(Player player1, Player player2, Configuration config, List<Region> territory){
         this.player1 = player1;
@@ -26,9 +28,7 @@ public class GameConfig implements Game {
         this.territory = territory;
         this.currentPlayer = this.player1;
         this.cityCenterOfRegion = new HashMap<>();
-        this.turn = new TurnConfig(config, territory, player1, player2, 1);
-        this.turn.StartTurn();
-        this.turn.getTurn();
+        this.turn = 1;
     }
 
     @Override
@@ -51,12 +51,43 @@ public class GameConfig implements Game {
         return win;
     }
 
+    private Player winner(){
+        if(player1.getBudget() == 0){
+            return player2;
+        }else if(player2.getBudget() == 0){
+            return player1;
+        }if (territory.stream().noneMatch(region -> region.isCityCenter() && region.getOwner() == player1))
+            return player2;
+        else if (territory.stream().noneMatch(region -> region.isCityCenter() && region.getOwner() == player2))
+            return player1;
+        return null;
+    }
+
     @Override
     public List<Region> getTerritory() {
         return territory;
     }
 
-    public List<Region> getAdjacentRegions(Region region){
+    @Override
+    public void getConstructionPlan(String constructionPlan) {
+            if(win != null){
+                throw new GameException.GameEnded();
+            }
+            startTurn();
+            executeConstructionPlan(constructionPlan);
+            win = winner();
+            endTurn();
+    }
+
+    private void executeConstructionPlan(String constructionPlan){
+        Parser parse = new ProcessParse(new GrammarTokenizer(constructionPlan));
+        List<ExecuteNode> plans = parse.parse();
+        for(ExecuteNode plan : plans){
+            plan.execute(this);
+        }
+    }
+
+    private List<Region> getAdjacentRegions(Region region){
         List<Region> adjacentRegions = new ArrayList<>(6);
         Position curLoc = region.getLocation();
         for(DirectionNode direction : DirectionNode.values()){
@@ -67,6 +98,16 @@ public class GameConfig implements Game {
             adjacentRegions.add(regionOn(newLoc));
         }
         return adjacentRegions;
+    }
+
+    private void interestProcess(){
+        for (Region region : territory) {
+            if (region.getOwner() != null) {
+                long deposit = region.getDeposit();
+                deposit *= config.interest_pct(turn, deposit) / 100.0;
+                region.updateDeposit(deposit);
+            }
+        }
     }
 
     @Override
@@ -80,44 +121,68 @@ public class GameConfig implements Game {
         return cityCrew;
     }
 
+    private void getCityCenters() {
+        for (Region region : territory) {
+            if (region.isCityCenter())
+                cityCenterOfRegion.put(region.getOwner(), region);
+        }
+    }
+
+    public void moveCityCrew(Position position){
+        if(!position.Check_isValidPosition(config.rows(), config.cols())){
+            return;
+        }
+        cityCrew = regionOn(position);
+    }
+
     @Override
-    public void getConstructionPlan(String constructionPlan) {
-        if(win != null){
-            throw new RuntimeException("Game is end");
+    public long getTurn() {
+        return turn;
+    }
+
+    public void startTurn(){
+        getCityCenters();
+        cityCrew = cityCenterOfRegion.get(currentPlayer);
+    }
+
+    public void endTurn(){
+        if(currentPlayer == player1){
+            currentPlayer = player2;
+        }else{
+            currentPlayer = player1;
+            interestProcess();
+            turn++;
         }
-        turn.StartTurn();
-        executeConstructionPlan(constructionPlan);
-        win = winner();
-        turn.endTurn();
     }
 
-    public void executeConstructionPlan(String constructionPlan){
-        Parser parse = new ProcessParse(new GrammarTokenizer(constructionPlan));
-        List<ExecuteNode> plans = parse.parse();
-        for(ExecuteNode plan : plans){
-            plan.execute(this);
-        }
+    @Override
+    public Map<String, Long> identifiers() {
+        return currentPlayer.identifiers();
     }
 
-    public Player winner(){
-        if(player1.getBudget() == 0){
-            return player2;
-        }else if(player2.getBudget() == 0){
-            return player1;
-        } //
-        return null;
+    @Override
+    public Map<String, Long> specialIdentifiers() {
+        Map<String, Long> bindings = new HashMap<>();
+        bindings.put("rows", config.cols());
+        bindings.put("cols", config.rows());
+        bindings.put("currentRow", cityCrew.getLocation().getPosX());
+        bindings.put("currentCol", cityCrew.getLocation().getPosY());
+        bindings.put("budget", currentPlayer.getBudget());
+        bindings.put("deposit", cityCrew.getDeposit());
+        bindings.put("maxDeposit", config.max_dep());
+        bindings.put("int", (long) config.interest_pct(turn, cityCrew.getDeposit()));
+        bindings.put("random", new Random().nextLong(1000));
+        return bindings;
     }
 
-    //
-    public record FinalPosition(Position position, Position finalPos) implements Comparable<FinalPosition>{
+    private record FinalPosition(Position position, Position finalPos) implements Comparable<FinalPosition>{
         @Override
         public int compareTo(FinalPosition o) {
             return (int) (getShortestPath(position, finalPos) -  getShortestPath(o.position, finalPos));
         }
     }
 
-    //
-    public long CalculateShortestPathStar(Position PStart, Position PEnd){
+    private long CalculateShortestPathStar(Position PStart, Position PEnd){
         PriorityQueue<FinalPosition> openSet = new PriorityQueue<>();
         HashMap<Position, Position> cameFrom = new HashMap<>();
         HashMap<Position, Double> gScore = new HashMap<>();
@@ -154,7 +219,7 @@ public class GameConfig implements Game {
         return -1;
     }
 
-    public long getShortestPathStar(HashMap<Position, Position> cameFrom, Position cur){
+    private long getShortestPathStar(HashMap<Position, Position> cameFrom, Position cur){
         long distance = 0;
         cur = cameFrom.get(cur);
 
@@ -165,35 +230,8 @@ public class GameConfig implements Game {
         return distance;
     }
 
-    public static double getShortestPath(Position PStart, Position PEnd){
+    private static double getShortestPath(Position PStart, Position PEnd){
         return Point2D.distance(PStart.getPosX(), PEnd.getPosX(), PStart.getPosY(), PEnd.getPosY());
-    }
-
-    @Override
-    public Map<String, Long> identifiers() {
-        return currentPlayer.identifiers();
-    }
-
-    @Override
-    public Map<String, Long> specialIdentifiers() {
-        Map<String, Long> bindings = new HashMap<>();
-        bindings.put("rows", config.cols());
-        bindings.put("cols", config.rows());
-        bindings.put("currentRow", cityCrew.getLocation().getPosX());
-        bindings.put("currentCol", cityCrew.getLocation().getPosY());
-        bindings.put("budget", currentPlayer.getBudget());
-        bindings.put("deposit", cityCrew.getDeposit());
-        bindings.put("maxDeposit", config.max_dep());
-        bindings.put("int", config.interest_pct(turn.getTurn(), cityCrew.getDeposit()));
-        bindings.put("random", new Random().nextLong(1000));
-        return bindings;
-    }
-
-    public void moveCityCrew(Position position){
-        if(!position.Check_isValidPosition(config.rows(), config.cols())){
-            return;
-        }
-        cityCrew = regionOn(position);
     }
 
     @Override
@@ -321,32 +359,32 @@ public class GameConfig implements Game {
             path[i] = cityCrew.getLocation();
         }
         do{
-           for(int i =0; i < 6; i++){
-               if(path[i] == null){
+            for(int i =0; i < 6; i++){
+                if(path[i] == null){
                     continue;
-               }
+                }
 
-               long index = path[i].getPosY() * config.cols() + path[i].getPosX();
-               Player owner = territory.get((int) index).getOwner();
-               if(owner != null && owner != currentPlayer){
-                   // need modify
-                   return i + 1L + distance * 10L;
-               }
-               path[i] = path[i].direction(DirectionNode.values()[i]);
-           }
+                long index = path[i].getPosY() * config.cols() + path[i].getPosX();
+                Player owner = territory.get((int) index).getOwner();
+                if(owner != null && owner != currentPlayer){
+                    // need modify
+                    return i + 1L + distance * 10L;
+                }
+                path[i] = path[i].direction(DirectionNode.values()[i]);
+            }
 
-           for(int i = 0; i < 6; i++){
+            for(int i = 0; i < 6; i++){
                 if(path[i] == null){
                     continue;
                 }
                 path[i] = path[i].Check_isValidPosition(config.rows(), config.cols()) ? path[i] : null;
-           }
-           cutoff = true;
+            }
+            cutoff = true;
 
-           for(Position position : path){
-               cutoff &= position == null;
-           }
-           distance++;
+            for(Position position : path){
+                cutoff &= position == null;
+            }
+            distance++;
 
         }while(!cutoff);
         return 0;
