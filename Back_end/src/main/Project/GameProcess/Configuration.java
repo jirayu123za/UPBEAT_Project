@@ -11,5 +11,5 @@ public interface Configuration {
     long plan_rev_sec();
     long rev_cost();
     long max_dep();
-    long interest_pct(long turn, long deposit);
+    double interest_pct(long turn, long deposit);
 }
